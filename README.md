@@ -53,8 +53,9 @@ Elementele aplicației sunt asociate unui client.
 
 1. Deschide folderul proiectului în Visual Studio Code.
 2. Deschide fișierul `index.html`.
-3. Pornește pagina folosind extensia Live Server sau deschide direct fișierul în browser.
-4. Pagina CinemaTicket va fi afișată în browser.
+3. Pornește pagina folosind extensia Live Server.
+4. Accesează pagina CinemaTicket în browser.
+5. Pentru verificarea logicii JavaScript, deschide consola browserului folosind `F12` sau `Ctrl + Shift + J`.
 
 ## AI Usage
 
@@ -67,11 +68,16 @@ ChatGPT a fost utilizat ca instrument de asistență pentru:
 - implementarea designului responsive;
 - implementarea temei întunecate;
 - verificarea cerințelor proiectului;
-- realizarea documentației.
+- implementarea logicii JavaScript;
+- realizarea funcțiilor de listare, numărare, căutare, adăugare, modificare și ștergere;
+- realizarea documentației proiectului.
 
 Codul generat a fost verificat și adaptat pentru tema CinemaTicket.
 
-Detaliile privind utilizarea AI sunt prezentate în folderul `ai-log`, în fișierul `etapa-01.md`.
+Detaliile privind utilizarea AI sunt prezentate în folderul `ai-log`, în fișierele:
+
+- `etapa-01.md`
+- `etapa-02.md`
 
 ## Interface Features
 
@@ -100,14 +106,51 @@ Pe ecrane cu lățimea mai mare de 700px, formularul și lista sunt afișate în
 
 Pe ecrane cu lățimea de maximum 700px, interfața trece la o singură coloană.
 
+## Stage 2: data logic
+
+Plain JavaScript, no DOM.
+
+Fișierul `cinema.js` conține array-ul cu datele aplicației și funcțiile care citesc și modifică aceste date.
+
+Rezultatele funcțiilor sunt afișate în consola browserului.
+
+Logica JavaScript include:
+
+- listarea titlurilor filmelor;
+- numărarea biletelor disponibile;
+- căutarea după titlu;
+- căutarea după ID;
+- adăugarea unui bilet cu validare;
+- generarea unui ID unic;
+- schimbarea stării unui bilet;
+- ștergerea unui bilet.
+
+Funcțiile folosesc metodele `map`, `filter`, `find` și `reduce`.
+
+Operațiile sunt realizate în mod imutabil. Funcțiile nu modifică array-ul primit, ci returnează array-uri noi.
+
+Adăugarea verifică:
+
+- dacă titlul filmului nu este gol;
+- dacă tipul biletului este unul dintre valorile permise.
+
+Testele JavaScript sunt grupate în consola browserului în secțiunile:
+
+- Citire;
+- Adăugare;
+- Modificare și ștergere;
+- Validare.
+
 ## Project Structure
 
 ```text
 CinemaTicket/
 │
 ├── ai-log/
-│   └── etapa-01.md
+│   ├── etapa-01.md
+│   └── etapa-02.md
 │
+├── cinema.js
 ├── index.html
 ├── style.css
 └── README.md
