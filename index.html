@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CinemaTicket</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="app-header">
+
+        <h1>CinemaTicket</h1>
+
+        <p>
+            Sistem de gestionare a vânzărilor de bilete pentru cinema
+        </p>
+
+        <p class="app-count">
+            3 bilete, dintre care 2 disponibile
+        </p>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- FORMULAR -->
+
+        <section class="panel">
+
+            <h2>Adaugă bilet</h2>
+
+            <form class="item-form">
+
+                <label for="film">
+                    Film
+
+                    <input
+                        type="text"
+                        id="film"
+                        name="film"
+                        placeholder="Ex: Oppenheimer"
+                    >
+                </label>
+
+
+                <label for="tip">
+                    Tip bilet
+
+                    <select id="tip" name="tip">
+
+                        <option value="standard">
+                            Standard
+                        </option>
+
+                        <option value="vip">
+                            VIP
+                        </option>
+
+                        <option value="student">
+                            Student
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <button type="submit">
+                    Adaugă
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- LISTA BILETELOR -->
+
+        <section class="panel">
+
+            <h2>Biletele mele</h2>
+
+            <ul class="item-list">
+
+
+                <!-- BILET 1 -->
+
+                <li class="item-card">
+
+                    <div>
+
+                        <h3>
+                            Avatar
+                        </h3>
+
+                        <span class="badge badge-standard">
+                            Standard
+                        </span>
+
+                        <span class="details">
+                            Sala 4 · 19:30 · Loc A12 · 2D
+                        </span>
+
+                    </div>
+
+                    <span class="status">
+                        Disponibil
+                    </span>
+
+                </li>
+
+
+                <!-- BILET 2 -->
+
+                <li class="item-card done">
+
+                    <div>
+
+                        <h3>
+                            Oppenheimer
+                        </h3>
+
+                        <span class="badge badge-vip">
+                            VIP
+                        </span>
+
+                        <span class="details">
+                            Sala 2 · 21:00 · Loc B07 · IMAX
+                        </span>
+
+                    </div>
+
+                    <span class="status">
+                        Vândut
+                    </span>
+
+                </li>
+
+
+                <!-- BILET 3 -->
+
+                <li class="item-card">
+
+                    <div>
+
+                        <h3>
+                            Dune: Part Two
+                        </h3>
+
+                        <span class="badge badge-student">
+                            Student
+                        </span>
+
+                        <span class="details">
+                            Sala 1 · 18:00 · Loc C15 · 3D
+                        </span>
+
+                    </div>
+
+                    <span class="status">
+                        Disponibil
+                    </span>
+
+                </li>
+
+
+            </ul>
+
+        </section>
+
+    </main>
+
+
+    <footer class="app-footer">
+
+        Proiect Tehnologii Web · CinemaTicket
+
+    </footer>
+
+
+</body>
+
+</html>
