@@ -141,6 +141,18 @@ Testele JavaScript sunt grupate în consola browserului în secțiunile:
 - Modificare și ștergere;
 - Validare.
 
+## Stage 2 Verification Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S2-R1 | JavaScript file is linked and logs are displayed on page load | [index.html](https://github.com/sebiandrei12/CinemaTicket/blob/bfb2af8/index.html) | Open the page and press F12 to check the Console |
+| S2-R2 | Array contains at least 3 items with id, title, state and tag | [cinema.js](https://github.com/sebiandrei12/CinemaTicket/blob/bfb2af8/cinema.js) | Open the `bilete` array and inspect the three initial objects |
+| S2-R3 | Functions for listing, counting, searching, adding, toggling and deleting | [cinema.js](https://github.com/sebiandrei12/CinemaTicket/blob/bfb2af8/cinema.js) | Inspect the implemented functions and run the console tests |
+| S2-R4 | Adding rejects an empty title and an invalid ticket type | [cinema.js](https://github.com/sebiandrei12/CinemaTicket/blob/bfb2af8/cinema.js) | Check the validation section and the error messages in the Console |
+| S2-R5 | Original array remains unchanged after adding an item | [cinema.js](https://github.com/sebiandrei12/CinemaTicket/blob/bfb2af8/cinema.js) | Run the add test and check that the original array still contains 3 items |
+| S2-R6 | README Stage 2 section and AI log are included | [README.md](https://github.com/sebiandrei12/CinemaTicket/blob/main/README.md) / [etapa-02.md](https://github.com/sebiandrei12/CinemaTicket/blob/43fab0e/ai-log/etapa-02.md) | Read the Stage 2 documentation and AI log |
+| S2-R7 | Stage 2 commit was pushed to GitHub | [Commit history](https://github.com/sebiandrei12/CinemaTicket/commits/main/) | Check the Git history for the Stage 2 commit |
+
 ## Project Structure
 
 ```text
