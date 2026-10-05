@@ -8,8 +8,8 @@
 
 ## Conversations
 
-- ChatGPT conversation about implementing the JavaScript data logic for the CinemaTicket application.
-- ChatGPT conversation about testing the JavaScript functions in the browser console.
+- [ChatGPT conversation - Stage 2 JavaScript implementation](https://chatgpt.com/share/6ac375aa-8498-83ed-9dd1-79630aa09982)
+- ChatGPT was also used for testing and verifying the JavaScript data logic in the browser console.
 
 ## Key requests
 
@@ -23,7 +23,7 @@
 
 - Asked: Implement JavaScript functions for listing, counting, searching, adding, modifying and deleting cinema tickets.
 - Got: Functions using `map`, `filter`, `find` and `reduce`, together with validation for new tickets.
-- Changed or rejected: The generated functions were kept and adapted to the CinemaTicket data model.
+- Changed or rejected: The generated functions were adapted to the CinemaTicket data model and implemented without using the DOM.
 
 ### 3. Test the JavaScript logic
 
