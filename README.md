@@ -166,3 +166,43 @@ CinemaTicket/
 ├── index.html
 ├── style.css
 └── README.md
+
+## Stage 3: Vite and React project
+
+The application now uses React and Vite in the `frontend/` directory. The previous HTML, CSS and JavaScript files are preserved in `mockup/`.
+
+The main React component displays the CinemaTicket application name, the total number of tickets, the number of available tickets and the ticket data in JSON format.
+
+### How to run
+
+Open a terminal in the project root and run:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open the local URL displayed in the terminal, usually `http://localhost:5173`.
+
+To verify the production build, run:
+
+```bash
+npm run build
+```
+
+### Stage 3 Verification Checklist
+
+| ID | Requirement | Where | How to check |
+|---|---|---|---|
+| S3-R1 | Vite development server starts without errors | `frontend/package.json` | Run `npm install` and `npm run dev` |
+| S3-R2 | Application name and ticket counter are displayed | `frontend/src/App.jsx` | Open the application and inspect the header |
+| S3-R3 | Ticket data is displayed in JSON format | `frontend/src/App.jsx` | Inspect the ticket list in the browser |
+| S3-R4 | Previous CSS styles are reused | `frontend/src/App.css` | Open the application and inspect its appearance |
+| S3-R5 | Production build completes successfully | `frontend/` | Run `npm run build` |
+| S3-R6 | README and AI log are updated | `README.md`, `ai-log/etapa-03.md` | Review both files |
+| S3-R7 | Stage 3 changes are committed and pushed | GitHub commit history | Check the published commit |
+
+### AI Usage — Stage 3
+
+AI was used to understand Vite and React, clarify the role of the project files, calculate the ticket counter, troubleshoot errors and verify the application build. Details are documented in `ai-log/etapa-03.md`.
