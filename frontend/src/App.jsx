@@ -1,4 +1,4 @@
-
+import TicketList from "./components/TicketList.jsx";
 
 const bilete = [
     {
@@ -49,7 +49,7 @@ export default function App() {
             <main className="container">
                 <section className="panel">
                     <h2>Biletele mele</h2>
-                    <pre>{JSON.stringify(bilete, null, 2)}</pre>
+                    <TicketList bilete={bilete} />
                 </section>
             </main>
         </>

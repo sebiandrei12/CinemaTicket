@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
 }
@@ -104,7 +103,9 @@ body {
     background: var(--accent-dark);
 }
 
-.item-list {
+/* Lista de bilete */
+
+.ticket-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -113,10 +114,13 @@ body {
     gap: 12px;
 }
 
-.item-card {
+/* Card individual pentru fiecare bilet */
+
+.ticket-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     padding: 16px;
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -124,21 +128,21 @@ body {
     transition: 0.2s;
 }
 
-.item-card:hover {
+.ticket-card:hover {
     border-color: var(--accent);
     background: var(--accent-soft);
 }
 
-.item-card h3 {
-    margin: 0 0 6px;
+.ticket-card h3 {
+    margin: 0 0 8px;
 }
 
-.details {
-    display: block;
-    margin-top: 8px;
+.ticket-card p {
+    margin: 6px 0;
     color: var(--muted);
-    font-size: 0.9rem;
 }
+
+/* Etichetele tipurilor de bilete */
 
 .badge {
     display: inline-block;
@@ -161,6 +165,8 @@ body {
     background: var(--student);
 }
 
+/* Starea biletului */
+
 .status {
     font-size: 0.85rem;
     font-weight: 700;
@@ -168,14 +174,23 @@ body {
     white-space: nowrap;
 }
 
-.item-card.done h3 {
+.ticket-card.done {
+    opacity: 0.85;
+}
+
+.ticket-card.done h3 {
     color: var(--muted);
     text-decoration: line-through;
 }
 
-.item-card.done {
-    opacity: 0.85;
+/* Mesaj pentru lista goală */
+
+.empty {
+    color: var(--muted);
+    font-style: italic;
 }
+
+/* Subsol */
 
 .app-footer {
     text-align: center;
@@ -183,21 +198,28 @@ body {
     padding: 24px;
 }
 
+/* Focus vizibil pentru tastatură */
+
 :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
+
+/* Adaptare pentru ecrane mici */
 
 @media (max-width: 700px) {
     .container {
         grid-template-columns: 1fr;
     }
 
-    .item-card {
+    .ticket-card {
         align-items: flex-start;
+        flex-direction: column;
         gap: 12px;
     }
 }
+
+/* Temă întunecată */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -209,7 +231,7 @@ body {
         --accent-soft: #2a2342;
     }
 
-    .item-card:hover {
+    .ticket-card:hover {
         background: var(--accent-soft);
     }
 }

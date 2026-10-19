@@ -206,3 +206,32 @@ npm run build
 ### AI Usage — Stage 3
 
 AI was used to understand Vite and React, clarify the role of the project files, calculate the ticket counter, troubleshoot errors and verify the application build. Details are documented in `ai-log/etapa-03.md`.
+
+## Etapa 4 — Componente React și randarea datelor
+
+În această etapă, aplicația CinemaTicket a fost organizată în componente React reutilizabile.
+
+### Implementare
+
+- `TicketCard.jsx` — afișează informațiile unui singur bilet.
+- `TicketList.jsx` — parcurge lista de bilete și generează cardurile folosind `map()`.
+- `App.jsx` — definește datele și transmite lista către `TicketList` prin `props`.
+- `App.css` — definește stilurile pentru carduri, etichete și starea biletelor.
+
+### Funcționalități
+
+- Afișarea dinamică a biletelor.
+- Transmiterea datelor prin `props`.
+- Utilizarea proprietății `key` pentru identificarea elementelor din listă.
+- Afișarea unui mesaj atunci când lista este goală.
+- Evidențierea vizuală a biletelor vândute și disponibile.
+
+### Verificare
+
+Comanda `npm run build`, executată din directorul `frontend`, a fost finalizată cu succes.
+
+### Documentarea utilizării AI
+
+Conversația AI asociată acestei etape: [Componente React, props și randarea listelor](https://chatgpt.com/share/6ad5e16a-05b8-83eb-abf4-98dadacd8be8)
+
+Detaliile implementării și întrebările analizate sunt consemnate în `ai-log/etapa-04.md`.
