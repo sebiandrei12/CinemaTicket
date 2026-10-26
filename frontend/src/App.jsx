@@ -1,6 +1,8 @@
+import { useState } from "react";
 import TicketList from "./components/TicketList.jsx";
 
-const bilete = [
+// Datele inițiale ale biletelor
+const BILETE_INITIALE = [
     {
         id: 1,
         titlu: "Avatar",
@@ -33,14 +35,63 @@ const bilete = [
     }
 ];
 
+// Tema inițială preluată din setările sistemului
+function temaInitiala() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+}
+
 export default function App() {
+    const [bilete, setBilete] = useState(BILETE_INITIALE);
+    const [tema, setTema] = useState(temaInitiala);
+
+    // Schimbă starea unui bilet fără să modifice direct lista
+    function handleToggle(id) {
+        setBilete((prev) =>
+            prev.map((bilet) =>
+                bilet.id === id
+                    ? { ...bilet, gata: !bilet.gata }
+                    : bilet
+            )
+        );
+    }
+
+    // Șterge un bilet din listă
+    function handleDelete(id) {
+        setBilete((prev) =>
+            prev.filter((bilet) => bilet.id !== id)
+        );
+    }
+
+    // Comută tema aplicației
+    function handleTema() {
+        const nouaTema = tema === "dark" ? "light" : "dark";
+
+        setTema(nouaTema);
+        document.documentElement.dataset.theme = nouaTema;
+    }
+
+    // Numărul biletelor disponibile este derivat din lista curentă
     const active = bilete.filter((bilet) => !bilet.gata).length;
 
     return (
         <>
             <header className="app-header">
+                <button
+                    className="theme-toggle"
+                    onClick={handleTema}
+                    aria-pressed={tema === "dark"}
+                >
+                    {tema === "dark" ? "Mod luminos" : "Mod întunecat"}
+                </button>
+
                 <h1>CinemaTicket</h1>
-                <p>Sistem de gestionare a vânzărilor de bilete pentru cinema.</p>
+
+                <p>
+                    Sistem de gestionare a vânzărilor de bilete pentru cinema.
+                </p>
+
                 <p className="app-count">
                     {bilete.length} bilete, dintre care {active} disponibile
                 </p>
@@ -49,7 +100,12 @@ export default function App() {
             <main className="container">
                 <section className="panel">
                     <h2>Biletele mele</h2>
-                    <TicketList bilete={bilete} />
+
+                    <TicketList
+                        bilete={bilete}
+                        onToggle={handleToggle}
+                        onDelete={handleDelete}
+                    />
                 </section>
             </main>
         </>

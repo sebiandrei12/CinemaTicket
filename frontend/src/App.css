@@ -7,9 +7,9 @@
     --card: #ffffff;
     --text: #1f2933;
     --muted: #6b7280;
-    --accent: #e11d48;
-    --accent-dark: #be123c;
-    --accent-soft: #ffe4e6;
+    --accent: #2C182B;
+    --accent-dark: #1F1020;
+    --accent-soft: #EDE5EC;
     --border: #e5e7eb;
     --standard: #2563eb;
     --vip: #9333ea;
@@ -25,6 +25,7 @@ body {
 }
 
 .app-header {
+    position: relative;
     background: var(--accent);
     color: white;
     text-align: center;
@@ -65,6 +66,8 @@ body {
 .panel h2 {
     margin-top: 0;
 }
+
+/* Stiluri pentru formulare */
 
 .item-form {
     display: flex;
@@ -114,7 +117,7 @@ body {
     gap: 12px;
 }
 
-/* Card individual pentru fiecare bilet */
+/* Card individual */
 
 .ticket-card {
     display: flex;
@@ -125,7 +128,7 @@ body {
     border: 1px solid var(--border);
     border-radius: 10px;
     background: var(--card);
-    transition: 0.2s;
+    transition: border-color 0.2s, background 0.2s;
 }
 
 .ticket-card:hover {
@@ -142,7 +145,7 @@ body {
     color: var(--muted);
 }
 
-/* Etichetele tipurilor de bilete */
+/* Tipurile de bilete */
 
 .badge {
     display: inline-block;
@@ -183,7 +186,7 @@ body {
     text-decoration: line-through;
 }
 
-/* Mesaj pentru lista goală */
+/* Lista goală */
 
 .empty {
     color: var(--muted);
@@ -198,11 +201,116 @@ body {
     padding: 24px;
 }
 
+/* Checkbox și informațiile biletului */
+
+.ticket-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 0;
+}
+
+.ticket-main input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 4px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+/* Acțiuni pentru bilete */
+
+.ticket-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-danger {
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-danger:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Butonul de schimbare a temei */
+
+.theme-toggle {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
 /* Focus vizibil pentru tastatură */
 
 :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+}
+
+/* Tema luminoasă */
+
+:root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --text: #1f2933;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent-soft: #EDE5EC;
+}
+
+/* Tema întunecată */
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #14121d;
+    --card: #1e1b2e;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: #352f4d;
+    --accent-soft: #2a2342;
+}
+
+/* Tema sistemului, dacă nu a fost aleasă tema luminoasă */
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #14121d;
+        --card: #1e1b2e;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --border: #352f4d;
+        --accent-soft: #2a2342;
+        --accent: #2C182B;
+        --accent-dark: #1F1020;
+    }
 }
 
 /* Adaptare pentru ecrane mici */
@@ -217,21 +325,18 @@ body {
         flex-direction: column;
         gap: 12px;
     }
-}
 
-/* Temă întunecată */
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #14121d;
-        --card: #1e1b2e;
-        --text: #e5e7eb;
-        --muted: #9ca3af;
-        --border: #352f4d;
-        --accent-soft: #2a2342;
+    .ticket-main {
+        width: 100%;
     }
 
-    .ticket-card:hover {
-        background: var(--accent-soft);
+    .ticket-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .theme-toggle {
+        position: static;
+        margin-bottom: 12px;
     }
 }

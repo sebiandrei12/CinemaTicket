@@ -1,7 +1,6 @@
-
 import TicketCard from "./TicketCard.jsx";
 
-export default function TicketList({ bilete }) {
+export default function TicketList({ bilete, onToggle, onDelete }) {
     if (bilete.length === 0) {
         return <p className="empty">Nu există niciun bilet.</p>;
     }
@@ -9,7 +8,12 @@ export default function TicketList({ bilete }) {
     return (
         <ul className="ticket-list">
             {bilete.map((bilet) => (
-                <TicketCard key={bilet.id} bilet={bilet} />
+                <TicketCard
+                    key={bilet.id}
+                    bilet={bilet}
+                    onToggle={onToggle}
+                    onDelete={onDelete}
+                />
             ))}
         </ul>
     );

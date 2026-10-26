@@ -235,3 +235,57 @@ Comanda `npm run build`, executată din directorul `frontend`, a fost finalizat�
 Conversația AI asociată acestei etape: [Componente React, props și randarea listelor](https://chatgpt.com/share/6ad5e16a-05b8-83eb-abf4-98dadacd8be8)
 
 Detaliile implementării și întrebările analizate sunt consemnate în `ai-log/etapa-04.md`.
+
+
+## Stage 5: local state and events
+
+In this stage, the CinemaTicket application was made interactive using React local state (`useState`) and event handlers.
+
+### Implementation
+
+- `App.jsx` — manages the ticket list and theme state.
+- `TicketList.jsx` — renders the ticket cards and passes event handlers through props.
+- `TicketCard.jsx` — provides the checkbox for changing a ticket's status and the delete button.
+- `App.css` — defines the ticket styles, status appearance, theme variables and responsive layout.
+
+### Features
+
+- Marking a ticket as sold or available.
+- Deleting a selected ticket.
+- Automatically updating the number of available tickets.
+- Switching between light and dark themes.
+- Updating the interface when React state changes.
+- Using immutable state updates.
+
+### How to verify
+
+From the `frontend/` directory, run:
+
+```bash
+npm run build
+```
+
+The production build completed successfully.
+
+Manual checks confirmed that marking a ticket as sold updates the counter, switching themes changes the interface, and deleting a ticket removes it from the list.
+
+### AI Usage — Stage 5
+
+AI was used to understand and implement React state, event handlers, props, immutable updates, ticket counting and theme switching. The AI-assisted implementation and verification process is documented in `ai-log/etapa-05.md`.
+
+[Stage 5 AI conversation](https://chatgpt.com/share/6adf2cde-50a4-83eb-afec-ca32540fb8dd)
+
+### Stage 5 Verification Checklist
+
+| ID | Requirement | Where | How to check |
+|---|---|---|---|
+| S5-R1 | Ticket list is managed using `useState` | `frontend/src/App.jsx` | Inspect the state declaration |
+| S5-R2 | Toggling a ticket updates its state and appearance | `frontend/src/App.jsx`, `frontend/src/components/TicketCard.jsx` | Toggle a ticket in the browser |
+| S5-R3 | Deleting a ticket removes it from the list | `frontend/src/App.jsx`, `frontend/src/components/TicketCard.jsx` | Delete a ticket and verify its removal |
+| S5-R4 | Available ticket count is derived from the current list | `frontend/src/App.jsx` | Inspect the filtering logic and toggle a ticket |
+| S5-R5 | State updates are immutable | `frontend/src/App.jsx` | Inspect the update functions; verify that `push()` and `splice()` are not used to mutate state |
+| S5-R6 | Light and dark themes can be selected | `frontend/src/App.jsx`, `frontend/src/App.css` | Switch between both themes |
+| S5-R7 | README and AI log are updated | `README.md`, `ai-log/etapa-05.md` | Review both files |
+| S5-R8 | Stage 5 changes are committed and pushed | GitHub commit history | Check the published commit |
+
+**Note:** The browser console and the system-preferred theme behavior should also be checked before marking those checks as verified.
