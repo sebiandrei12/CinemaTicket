@@ -340,3 +340,31 @@ body {
         margin-bottom: 12px;
     }
 }
+
+
+
+/* Etapa 6 - Mesaje de încărcare și eroare */
+
+:root {
+    --error-bg: #fdf2f8;
+    --error-border: #fbcfe8;
+    --error-text: #9d174d;
+}
+
+:root[data-theme="dark"] {
+    --error-bg: #3b1d2e;
+    --error-border: #6b2a4a;
+    --error-text: #fda4af;
+}
+
+.info {
+    color: var(--muted, #64748b);
+}
+
+.error {
+    color: var(--error-text);
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+    border-radius: 8px;
+    padding: 10px 12px;
+}

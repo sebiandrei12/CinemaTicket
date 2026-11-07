@@ -1,39 +1,7 @@
-import { useState } from "react";
-import TicketList from "./components/TicketList.jsx";
 
-// Datele inițiale ale biletelor
-const BILETE_INITIALE = [
-    {
-        id: 1,
-        titlu: "Avatar",
-        gata: false,
-        tip: "standard",
-        sala: 4,
-        ora: "19:30",
-        loc: "A12",
-        proiectie: "2D"
-    },
-    {
-        id: 2,
-        titlu: "Oppenheimer",
-        gata: true,
-        tip: "vip",
-        sala: 2,
-        ora: "21:00",
-        loc: "B07",
-        proiectie: "IMAX"
-    },
-    {
-        id: 3,
-        titlu: "Dune: Part Two",
-        gata: false,
-        tip: "student",
-        sala: 1,
-        ora: "18:00",
-        loc: "C15",
-        proiectie: "3D"
-    }
-];
+import { useEffect, useState } from "react";
+import TicketList from "./components/TicketList.jsx";
+import { fetchBilete } from "./api.js";
 
 // Tema inițială preluată din setările sistemului
 function temaInitiala() {
@@ -43,10 +11,41 @@ function temaInitiala() {
 }
 
 export default function App() {
-    const [bilete, setBilete] = useState(BILETE_INITIALE);
+    const [bilete, setBilete] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [tema, setTema] = useState(temaInitiala);
 
-    // Schimbă starea unui bilet fără să modifice direct lista
+    // Etapa 6: încărcarea biletelor de la API
+    useEffect(() => {
+        let ignore = false;
+
+        async function load() {
+            try {
+                const data = await fetchBilete();
+
+                if (!ignore) {
+                    setBilete(data);
+                }
+            } catch (err) {
+                if (!ignore) {
+                    setError(err.message);
+                }
+            } finally {
+                if (!ignore) {
+                    setLoading(false);
+                }
+            }
+        }
+
+        load();
+
+        return () => {
+            ignore = true;
+        };
+    }, []);
+
+    // Schimbă starea unui bilet
     function handleToggle(id) {
         setBilete((prev) =>
             prev.map((bilet) =>
@@ -57,14 +56,14 @@ export default function App() {
         );
     }
 
-    // Șterge un bilet din listă
+    // Șterge un bilet
     function handleDelete(id) {
         setBilete((prev) =>
             prev.filter((bilet) => bilet.id !== id)
         );
     }
 
-    // Comută tema aplicației
+    // Schimbă tema luminoasă / întunecată
     function handleTema() {
         const nouaTema = tema === "dark" ? "light" : "dark";
 
@@ -72,7 +71,7 @@ export default function App() {
         document.documentElement.dataset.theme = nouaTema;
     }
 
-    // Numărul biletelor disponibile este derivat din lista curentă
+    // Calculează automat biletele disponibile
     const active = bilete.filter((bilet) => !bilet.gata).length;
 
     return (
@@ -101,11 +100,25 @@ export default function App() {
                 <section className="panel">
                     <h2>Biletele mele</h2>
 
-                    <TicketList
-                        bilete={bilete}
-                        onToggle={handleToggle}
-                        onDelete={handleDelete}
-                    />
+                    {loading && (
+                        <p className="info">Se încarcă biletele...</p>
+                    )}
+
+                    {error && (
+                        <p className="error">
+                            Nu am putut încărca biletele: {error}.
+                            Verifică dacă serverul este pornit cu{" "}
+                            <code>npm run api</code>.
+                        </p>
+                    )}
+
+                    {!loading && !error && (
+                        <TicketList
+                            bilete={bilete}
+                            onToggle={handleToggle}
+                            onDelete={handleDelete}
+                        />
+                    )}
                 </section>
             </main>
         </>

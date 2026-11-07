@@ -1,0 +1,56 @@
+
+
+{
+  "bilete": [
+    {
+      "id": 1,
+      "titlu": "Avatar",
+      "gata": false,
+      "tip": "standard",
+      "sala": 4,
+      "ora": "19:30",
+      "loc": "A12",
+      "proiectie": "2D"
+    },
+    {
+      "id": 2,
+      "titlu": "Oppenheimer",
+      "gata": true,
+      "tip": "vip",
+      "sala": 2,
+      "ora": "21:00",
+      "loc": "B07",
+      "proiectie": "IMAX"
+    },
+    {
+      "id": 3,
+      "titlu": "Dune: Part Two",
+      "gata": false,
+      "tip": "student",
+      "sala": 1,
+      "ora": "18:00",
+      "loc": "C15",
+      "proiectie": "3D"
+    },
+    {
+      "id": 4,
+      "titlu": "Interstellar",
+      "gata": false,
+      "tip": "standard",
+      "sala": 3,
+      "ora": "20:00",
+      "loc": "D08",
+      "proiectie": "IMAX"
+    },
+    {
+      "id": 5,
+      "titlu": "Inception",
+      "gata": true,
+      "tip": "vip",
+      "sala": 5,
+      "ora": "22:00",
+      "loc": "E10",
+      "proiectie": "2D"
+    }
+  ]
+}
