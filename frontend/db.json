@@ -1,5 +1,3 @@
-
-
 {
   "bilete": [
     {
@@ -51,6 +49,16 @@
       "ora": "22:00",
       "loc": "E10",
       "proiectie": "2D"
+    },
+    {
+      "titlu": "Titanic",
+      "tip": "vip",
+      "sala": 1,
+      "ora": "14:03",
+      "loc": "A12",
+      "proiectie": "3D",
+      "gata": false,
+      "id": 6
     }
   ]
 }

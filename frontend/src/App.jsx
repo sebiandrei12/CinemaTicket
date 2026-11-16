@@ -1,9 +1,16 @@
 
 import { useEffect, useState } from "react";
 import TicketList from "./components/TicketList.jsx";
-import { fetchBilete } from "./api.js";
+import BiletForm from "./components/BiletForm.jsx";
 
-// Tema inițială preluată din setările sistemului
+import {
+    createBilet,
+    deleteBilet,
+    fetchBilete,
+    updateBilet
+} from "./api.js";
+
+// Tema inițială este preluată din setările sistemului
 function temaInitiala() {
     return window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
@@ -16,7 +23,7 @@ export default function App() {
     const [error, setError] = useState(null);
     const [tema, setTema] = useState(temaInitiala);
 
-    // Etapa 6: încărcarea biletelor de la API
+    // GET - Încărcarea biletelor de la API
     useEffect(() => {
         let ignore = false;
 
@@ -45,25 +52,55 @@ export default function App() {
         };
     }, []);
 
-    // Schimbă starea unui bilet
-    function handleToggle(id) {
-        setBilete((prev) =>
-            prev.map((bilet) =>
-                bilet.id === id
-                    ? { ...bilet, gata: !bilet.gata }
-                    : bilet
-            )
-        );
+    // POST - Adăugarea unui bilet pe server
+    async function handleAdd(bilet) {
+        const creat = await createBilet(bilet);
+
+        // Actualizăm lista doar după confirmarea serverului
+        setBilete((prev) => [...prev, creat]);
     }
 
-    // Șterge un bilet
-    function handleDelete(id) {
-        setBilete((prev) =>
-            prev.filter((bilet) => bilet.id !== id)
-        );
+    // PATCH - Modificarea stării unui bilet pe server
+    async function handleToggle(id) {
+        const bilet = bilete.find((b) => b.id === id);
+
+        if (!bilet) return;
+
+        try {
+            setError(null);
+
+            const actualizat = await updateBilet(id, {
+                gata: !bilet.gata
+            });
+
+            // Folosim obiectul întors de server
+            setBilete((prev) =>
+                prev.map((b) =>
+                    b.id === id ? actualizat : b
+                )
+            );
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
-    // Schimbă tema luminoasă / întunecată
+    // DELETE - Ștergerea definitivă a unui bilet
+    async function handleDelete(id) {
+        try {
+            setError(null);
+
+            await deleteBilet(id);
+
+            // Eliminăm biletul doar după confirmarea serverului
+            setBilete((prev) =>
+                prev.filter((b) => b.id !== id)
+            );
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
+    // Schimbarea temei luminoase / întunecate
     function handleTema() {
         const nouaTema = tema === "dark" ? "light" : "dark";
 
@@ -71,8 +108,8 @@ export default function App() {
         document.documentElement.dataset.theme = nouaTema;
     }
 
-    // Calculează automat biletele disponibile
-    const active = bilete.filter((bilet) => !bilet.gata).length;
+    // Calcularea numărului de bilete disponibile
+    const active = bilete.filter((b) => !b.gata).length;
 
     return (
         <>
@@ -82,37 +119,54 @@ export default function App() {
                     onClick={handleTema}
                     aria-pressed={tema === "dark"}
                 >
-                    {tema === "dark" ? "Mod luminos" : "Mod întunecat"}
+                    {tema === "dark"
+                        ? "Mod luminos"
+                        : "Mod întunecat"}
                 </button>
 
                 <h1>CinemaTicket</h1>
 
                 <p>
-                    Sistem de gestionare a vânzărilor de bilete pentru cinema.
+                    Sistem de gestionare a vânzărilor
+                    de bilete pentru cinema.
                 </p>
 
                 <p className="app-count">
-                    {bilete.length} bilete, dintre care {active} disponibile
+                    {bilete.length} bilete, dintre care{" "}
+                    {active} disponibile
                 </p>
             </header>
 
             <main className="container">
                 <section className="panel">
+                    <h2>Adaugă bilet</h2>
+
+                    <BiletForm onAdd={handleAdd} />
+                </section>
+
+                <section className="panel">
                     <h2>Biletele mele</h2>
 
                     {loading && (
-                        <p className="info">Se încarcă biletele...</p>
-                    )}
-
-                    {error && (
-                        <p className="error">
-                            Nu am putut încărca biletele: {error}.
-                            Verifică dacă serverul este pornit cu{" "}
-                            <code>npm run api</code>.
+                        <p
+                            className="info"
+                            data-testid="loading"
+                        >
+                            Se încarcă biletele...
                         </p>
                     )}
 
-                    {!loading && !error && (
+                    {error && (
+                        <p
+                            className="error"
+                            data-testid="error"
+                        >
+                            Nu am putut efectua operația:{" "}
+                            {error}
+                        </p>
+                    )}
+
+                    {!loading && (
                         <TicketList
                             bilete={bilete}
                             onToggle={handleToggle}

@@ -1,0 +1,14 @@
+
+
+{
+  "resource": "bilete",
+  "title": "titlu",
+  "done": "gata",
+  "sample": {
+    "tip": "standard",
+    "sala": "4",
+    "ora": "19:30",
+    "loc": "A12",
+    "proiectie": "2D"
+  }
+}

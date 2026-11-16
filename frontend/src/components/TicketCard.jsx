@@ -1,3 +1,4 @@
+
 const ETICHETE_TIP = {
     standard: "Standard",
     vip: "VIP",
@@ -6,7 +7,11 @@ const ETICHETE_TIP = {
 
 export default function TicketCard({ bilet, onToggle, onDelete }) {
     return (
-        <li className={bilet.gata ? "ticket-card done" : "ticket-card"}>
+        <li
+            className={bilet.gata ? "ticket-card done" : "ticket-card"}
+            data-testid="item"
+            data-id={bilet.id}
+        >
             <label className="ticket-main">
                 <input
                     type="checkbox"
@@ -15,10 +20,13 @@ export default function TicketCard({ bilet, onToggle, onDelete }) {
                     aria-label={`Marchează biletul pentru ${bilet.titlu} ca ${
                         bilet.gata ? "disponibil" : "vândut"
                     }`}
+                    data-testid="item-toggle"
                 />
 
                 <div>
-                    <h3>{bilet.titlu}</h3>
+                    <h3 data-testid="item-title">
+                        {bilet.titlu}
+                    </h3>
 
                     <span className={`badge badge-${bilet.tip}`}>
                         {ETICHETE_TIP[bilet.tip]}
@@ -41,6 +49,7 @@ export default function TicketCard({ bilet, onToggle, onDelete }) {
                     className="btn-danger"
                     onClick={() => onDelete(bilet.id)}
                     aria-label={`Șterge biletul pentru ${bilet.titlu}`}
+                    data-testid="item-delete"
                 >
                     Șterge
                 </button>

@@ -1,532 +1,408 @@
 
-# CinemaTicket – Proiect Tehnologii Web
+# CinemaTicket – React Frontend
 
 ## Descriere
 
-CinemaTicket este o aplicație web pentru gestionarea biletelor de cinema, dezvoltată în cadrul disciplinei Tehnologii Web.
+CinemaTicket este o aplicație web pentru gestionarea biletelor de cinema, dezvoltată în cadrul disciplinei Tehnologii Web de la Universitatea POLITEHNICA București.
 
-Aplicația permite afișarea biletelor, vizualizarea informațiilor despre filme și proiecții, modificarea stării biletelor și ștergerea acestora.
+Aplicația permite vizualizarea, adăugarea, modificarea stării și ștergerea biletelor, folosind React, Vite și un API REST simulat cu json-server.
 
-Proiectul a fost dezvoltat progresiv, pornind de la HTML și CSS, continuând cu JavaScript și React, iar în Etapa 6 a fost introdusă încărcarea datelor printr-un API REST.
+Proiectul este dezvoltat progresiv, în etape, fiecare etapă adăugând funcționalități noi.
 
 ## Tehnologii utilizate
 
-- HTML5
-- CSS3
-- JavaScript
 - React
-- Vite
+- JavaScript (ES6+)
 - JSX
-- React Hooks: useState și useEffect
-- Fetch API
-- JSON
+- CSS3
+- Vite
+- Node.js și npm
 - json-server 0.17.4
+- Fetch API
+- React Hooks: useState și useEffect
 - Git și GitHub
-- Visual Studio Code
 
 ## Structura proiectului
 
 ```text
-CinemaTicket/
-├── ai-log/
-│   ├── etapa-01.md
-│   ├── etapa-02.md
-│   ├── etapa-03.md
-│   ├── etapa-04.md
-│   ├── etapa-05.md
-│   └── etapa-06.md
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── TicketCard.jsx
-│   │   │   └── TicketList.jsx
-│   │   ├── api.js
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── main.jsx
-│   │   └── cinema.js
-│   ├── .env.example
-│   ├── db.json
+frontend/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── BiletForm.jsx
+│   │   ├── TicketCard.jsx
+│   │   └── TicketList.jsx
+│   ├── api.js
+│   ├── App.jsx
+│   ├── App.css
+│   ├── cinema.js
 │   ├── index.html
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── vite.config.js
-│   └── README.md
-│
-└── mockup/
-    ├── cinema.js
-    ├── index.html
-    ├── style.css
-    └── README.md
+│   ├── main.jsx
+│   └── style.css
+├── .env.example
+├── .gitignore
+├── db.json
+├── eslint.config.js
+├── index.html
+├── package.json
+├── package-lock.json
+├── README.md
+└── vite.config.js
 ```
 
-Directorul `mockup` păstrează versiunea inițială a aplicației, realizată cu HTML, CSS și JavaScript.
+Fișierul `tw.json` se află în rădăcina repository-ului CinemaTicket, în afara folderului `frontend`.
 
-Directorul `frontend` conține aplicația React dezvoltată începând cu Etapa 3.
+## Modelul de date
 
-Documentația utilizării AI este organizată în directorul `ai-log`.
+Fiecare bilet este reprezentat printr-un obiect JavaScript cu următoarele proprietăți:
 
----
+| Proprietate | Tip | Descriere |
+| --- | --- | --- |
+| id | number | Identificator unic generat de server |
+| titlu | string | Titlul filmului |
+| gata | boolean | false = disponibil, true = vândut |
+| tip | string | standard, vip sau student |
+| sala | number | Numărul sălii de cinema |
+| ora | string | Ora proiecției |
+| loc | string | Locul din sală |
+| proiectie | string | 2D, 3D sau IMAX |
 
-## Etapa 1 – Interfața HTML și CSS
+Datele sunt stocate în `db.json`, în colecția `bilete`.
 
-În prima etapă a fost creată interfața inițială pentru aplicația CinemaTicket.
+## Etapa 3 – Inițializarea proiectului React cu Vite
 
-### Funcționalități
+În Etapa 3 a fost realizată migrarea aplicației la React și Vite.
 
-- Structură HTML semantică.
-- Antet cu numele și descrierea aplicației.
-- Formular demonstrativ pentru introducerea datelor.
-- Trei bilete demonstrative.
-- Evidențierea biletelor disponibile și vândute.
-- Etichete pentru tipurile de bilete.
-- Layout realizat folosind CSS Grid și Flexbox.
-- Design responsive.
-- Efecte hover și focus vizibil.
-- Suport pentru temă întunecată.
+Funcționalități implementate:
 
-### Verificare
-
-Interfața inițială a fost verificată în browser folosind extensia Live Server.
-
-Documentație AI: `../ai-log/etapa-01.md`
-
----
-
-## Etapa 2 – Logica JavaScript
-
-În Etapa 2 a fost implementată logica de manipulare a datelor folosind JavaScript, fără interacțiune cu DOM-ul.
-
-### Funcționalități
-
-- Stocarea biletelor într-un array de obiecte.
-- Listarea titlurilor filmelor.
-- Numărarea biletelor disponibile.
-- Căutarea biletelor după titlu și ID.
-- Adăugarea biletelor cu validare.
-- Generarea identificatorilor unici.
-- Modificarea stării unui bilet.
-- Ștergerea unui bilet.
-- Actualizarea imutabilă a datelor.
-
-### Metode JavaScript utilizate
-
-- `map()` – transformarea elementelor.
-- `filter()` – filtrarea elementelor.
-- `find()` – căutarea elementelor.
-- `reduce()` – agregarea datelor.
-
-Funcțiile au fost verificate prin teste executate în consola browserului.
-
-### Stage 2 Verification Checklist
-
-| ID | Requirement | Where | How to check |
-|---|---|---|---|
-| S2-R1 | JavaScript linked correctly | `mockup/index.html` | Open Console |
-| S2-R2 | At least three sample tickets | `mockup/cinema.js` | Inspect array |
-| S2-R3 | Data manipulation functions | `mockup/cinema.js` | Run console tests |
-| S2-R4 | Input validation | `mockup/cinema.js` | Test invalid inputs |
-| S2-R5 | Immutable operations | `mockup/cinema.js` | Check original array |
-| S2-R6 | README and AI log | `../ai-log/etapa-02.md` | Read documentation |
-| S2-R7 | GitHub publication | Git history | Check Stage 2 commit |
-
-Documentație AI: `../ai-log/etapa-02.md`
-
----
-
-## Etapa 3 – React și Vite
-
-În această etapă, aplicația a fost migrată la React folosind Vite.
-
-### Implementare
-
-- Crearea aplicației React în directorul `frontend`.
-- Configurarea proiectului cu Vite.
-- Crearea componentei principale `App.jsx`.
-- Configurarea fișierului `main.jsx`.
-- Reutilizarea stilurilor CSS.
-- Definirea datelor demonstrative.
+- Inițializarea proiectului React.
+- Afișarea numelui CinemaTicket.
+- Definirea datelor inițiale despre bilete.
+- Afișarea numărului total de bilete.
 - Calcularea numărului de bilete disponibile.
 - Afișarea datelor în format JSON.
+- Reutilizarea stilurilor CSS.
 
-### Fișiere principale
+## Etapa 4 – Componente și afișarea listelor
 
-- `src/App.jsx` – componenta principală.
-- `src/App.css` – stilizarea aplicației.
-- `src/main.jsx` – punctul de intrare React.
-- `index.html` – documentul HTML principal.
+În Etapa 4 au fost create componente React reutilizabile.
 
-### Verificare
+### TicketList.jsx
 
-Aplicația a fost pornită cu `npm run dev`.
+Primește lista de bilete prin props și afișează câte un `TicketCard` pentru fiecare bilet.
 
-Comanda `npm run build` a fost executată cu succes în această etapă.
+Folosește metoda `map()` și identificatori unici prin `key={bilet.id}`.
 
-Documentație AI: `../ai-log/etapa-03.md`
+Dacă nu există bilete, afișează mesajul:
 
----
+`Nu există niciun bilet.`
 
-## Etapa 4 – Componente React și randarea datelor
-
-În Etapa 4, interfața a fost reorganizată în componente React reutilizabile.
-
-### Componente implementate
-
-**App.jsx**
-
-Componenta principală care gestionează datele și transmite lista de bilete către componentele copil.
-
-**TicketList.jsx**
-
-Primește lista de bilete prin props și folosește `map()` pentru a genera componentele TicketCard.
-
-**TicketCard.jsx**
+### TicketCard.jsx
 
 Afișează informațiile unui bilet:
-- titlul filmului;
-- tipul biletului;
-- sala;
-- ora;
-- locul;
-- tipul proiecției;
-- starea biletului.
 
-### Concepte utilizate
+- Titlul filmului
+- Tipul biletului
+- Sala
+- Ora
+- Locul
+- Tipul proiecției
+- Starea biletului
 
-- Componente React.
-- JSX.
-- Props.
-- map().
-- key.
-- Randare condiționată.
-- Reutilizarea componentelor.
-
-### Fluxul datelor
-
-```text
-App.jsx
-   |
-   v
-TicketList.jsx
-   |
-   v
-TicketCard.jsx
-```
-
-### Verificare
-
-Au fost verificate afișarea biletelor, funcționarea componentelor și compilarea aplicației.
-
-Documentație AI: `../ai-log/etapa-04.md`
-
----
+Aspectul cardului se adaptează în funcție de starea disponibil/vândut.
 
 ## Etapa 5 – State și evenimente
 
-În Etapa 5, aplicația CinemaTicket a devenit interactivă prin utilizarea React Hooks și a funcțiilor de tratare a evenimentelor.
+În această etapă aplicația a devenit interactivă.
 
-### Funcționalități implementate
+Au fost implementate:
 
-- Gestionarea listei de bilete prin `useState`.
-- Schimbarea stării unui bilet.
-- Ștergerea unui bilet.
-- Recalcularea automată a contorului.
-- Actualizarea interfeței fără reîncărcarea paginii.
-- Comutarea între tema luminoasă și tema întunecată.
-- Actualizări imutabile ale state-ului.
+- Gestionarea listei de bilete cu `useState`.
+- Bifarea unui bilet ca vândut sau disponibil.
+- Ștergerea biletelor.
+- Recalcularea automată a contoarelor.
+- Actualizarea imutabilă a stării cu `map()` și `filter()`.
+- Transmiterea funcțiilor prin props.
+- Schimbarea temei luminoase/întunecate.
 
-### Funcții principale
+În Etapa 5, modificările erau păstrate numai în state-ul React și se pierdeau la reîncărcarea paginii.
 
-**handleToggle(id)**
+## Etapa 6 – Date de la un API
 
-Modifică starea unui bilet folosind `map()`.
+În Etapa 6, datele au fost mutate din codul React în `db.json`.
 
-**handleDelete(id)**
+A fost instalat `json-server@0.17.4`, care oferă un API REST local.
 
-Elimină biletul selectat folosind `filter()`.
-
-**handleTema()**
-
-Schimbă tema aplicației prin React state și atributul `data-theme`.
-
-### Calcularea biletelor disponibile
-
-```javascript
-const active = bilete.filter((bilet) => !bilet.gata).length;
-```
-
-Numărul biletelor disponibile este calculat direct din lista curentă, fără un state separat.
-
-### Stage 5 Verification Checklist
-
-| ID | Requirement | Where | How to check |
-|---|---|---|---|
-| S5-R1 | useState for ticket management | `src/App.jsx` | Inspect state |
-| S5-R2 | Ticket toggle functionality | `src/App.jsx` | Toggle ticket |
-| S5-R3 | Delete functionality | `src/App.jsx` | Delete ticket |
-| S5-R4 | Derived available counter | `src/App.jsx` | Check counter |
-| S5-R5 | Immutable state updates | `src/App.jsx` | Inspect map/filter |
-| S5-R6 | Light and dark themes | `src/App.jsx`, `src/App.css` | Switch theme |
-| S5-R7 | README and AI log | `../ai-log/etapa-05.md` | Read documentation |
-| S5-R8 | GitHub publication | Git history | Check commit |
-
-Documentație AI: `../ai-log/etapa-05.md`
-
----
-
-## Etapa 6 – Date de la un API REST (useEffect)
-
-În Etapa 6, datele aplicației CinemaTicket au fost mutate din codul React într-un fișier JSON, accesibil printr-un API REST local.
-
-API-ul este realizat cu `json-server@0.17.4`.
-
-### Obiective
-
-- Mutarea datelor în `db.json`.
-- Configurarea serverului REST.
-- Încărcarea biletelor prin cereri HTTP.
-- Utilizarea fetch și async/await.
-- Utilizarea useEffect.
-- Gestionarea stărilor loading, success și error.
-- Configurarea adresei API-ului printr-o variabilă de mediu.
-
-### 6.1. Configurarea API-ului
-
-Datele sunt stocate în:
-
-`frontend/db.json`
-
-Fișierul conține cinci bilete demonstrative:
-
-1. Avatar – Standard – Disponibil.
-2. Oppenheimer – VIP – Vândut.
-3. Dune: Part Two – Student – Disponibil.
-4. Interstellar – Standard – Disponibil.
-5. Inception – VIP – Vândut.
-
-Ruta API:
+Endpoint-ul principal este:
 
 `http://localhost:3001/bilete`
 
-Serverul este pornit folosind:
+Fișierul `src/api.js` conține funcția `fetchBilete()`, folosită pentru citirea datelor.
 
-```bash
-npm run api
-```
+În `App.jsx`, încărcarea biletelor se realizează cu `useEffect`.
 
-### 6.2. Implementarea funcției fetchBilete
+Aplicația gestionează următoarele stări:
 
-În `src/api.js` a fost implementată funcția:
+- Loading – datele sunt în curs de încărcare.
+- Success – biletele sunt afișate.
+- Error – apare un mesaj de eroare dacă API-ul nu poate fi accesat.
+
+URL-ul API-ului poate fi configurat prin `VITE_API_URL`, documentat în `.env.example`.
+
+În această etapă, bifarea și ștergerea erau încă operații locale.
+
+## Etapa 7 – Formular, validare și CRUD
+
+În Etapa 7, CinemaTicket a fost extins cu un formular controlat și operații de modificare permanentă a datelor.
+
+Aplicația implementează toate cele patru operații CRUD:
+
+| Operație | Metodă HTTP | Endpoint |
+| --- | --- | --- |
+| Citire bilete | GET | /bilete |
+| Adăugare bilet | POST | /bilete |
+| Modificare stare | PATCH | /bilete/:id |
+| Ștergere bilet | DELETE | /bilete/:id |
+
+### 7.1. Formularul BiletForm.jsx
+
+A fost creată componenta `src/components/BiletForm.jsx`.
+
+Formularul permite introducerea următoarelor câmpuri:
+
+- Titlul filmului
+- Tipul biletului: Standard, VIP, Student
+- Sala
+- Ora proiecției
+- Locul
+- Tipul proiecției: 2D, 3D, IMAX
+
+Fiecare câmp este controlat folosind `useState`, `value` și `onChange`.
+
+La trimiterea formularului, `e.preventDefault()` împiedică reîncărcarea automată a paginii.
+
+### 7.2. Validarea datelor
+
+Înainte de trimiterea cererii POST, formularul verifică:
+
+- Titlul filmului este obligatoriu.
+- Titlul are maximum 100 de caractere.
+- Tipul biletului este valid.
+- Sala este un număr întreg între 1 și 20.
+- Ora este în formatul HH:MM.
+- Locul respectă formatul A12 sau B07.
+- Tipul proiecției este valid.
+
+Mesajele de eroare sunt afișate direct în formular, fără folosirea funcției `alert()`.
+
+Câmpul invalid este marcat cu `aria-invalid`, iar CSS-ul evidențiază eroarea.
+
+### 7.3. Prevenirea trimiterilor duble
+
+Formularul folosește starea `trimite`.
+
+Cât timp cererea POST este în desfășurare:
+
+- Butonul este dezactivat.
+- Textul butonului devine „Se salvează...”.
+- Nu poate fi trimisă încă o cerere prin formular.
+
+După o salvare reușită, câmpurile sunt resetate.
+
+Dacă salvarea eșuează, datele introduse sunt păstrate și apare un mesaj de eroare.
+
+### 7.4. Funcțiile API
+
+Fișierul `src/api.js` conține funcția comună `request()`.
+
+Toate cererile HTTP sunt realizate prin această funcție, care:
+
+- Configurează antetul `Content-Type: application/json`.
+- Verifică dacă răspunsul HTTP este valid.
+- Aruncă o eroare pentru răspunsurile care nu sunt 2xx.
+- Tratează răspunsurile HTTP 204 fără conținut.
+
+Funcțiile disponibile sunt:
 
 ```javascript
-export const API_URL =
-    import.meta.env.VITE_API_URL ?? "http://localhost:3001";
+fetchBilete()
+createBilet(bilet)
+updateBilet(id, changes)
+deleteBilet(id)
+```
 
-export async function fetchBilete() {
-    const res = await fetch(`${API_URL}/bilete`);
+Componentele React nu folosesc direct `fetch()`.
 
-    if (!res.ok) {
-        throw new Error(`Eroare server: ${res.status}`);
-    }
+### 7.5. Persistența datelor
 
-    return res.json();
+Adăugarea, bifarea și ștergerea sunt realizate prin API.
+
+Principiul implementat este:
+
+**Întâi serverul, apoi actualizarea state-ului React.**
+
+La adăugare, biletul este afișat numai după ce serverul confirmă salvarea și returnează obiectul cu ID.
+
+La modificare, lista este actualizată folosind obiectul returnat de server.
+
+La ștergere, biletul este eliminat din interfață după confirmarea cererii DELETE.
+
+Modificările sunt salvate în `db.json` și rămân după reîncărcarea paginii.
+
+### 7.6. Layout și aspect vizual
+
+Aplicația folosește un layout cu două coloane:
+
+- Stânga: formularul pentru adăugarea biletelor.
+- Dreapta: lista biletelor existente.
+
+Pe ecranele cu lățime de maximum 700px, panourile sunt afișate unul sub altul.
+
+Au fost păstrate:
+
+- Tema luminoasă/întunecată.
+- Stilurile cardurilor.
+- Etichetele Standard, VIP și Student.
+- Evidențierea biletelor vândute.
+- Butoanele de ștergere.
+- Contoarele de bilete.
+
+### 7.7. Verificarea automată
+
+În rădăcina repository-ului a fost creat fișierul `tw.json`.
+
+Configurația folosită identifică:
+
+```json
+{
+  "resource": "bilete",
+  "title": "titlu",
+  "done": "gata",
+  "sample": {
+    "tip": "standard",
+    "sala": "4",
+    "ora": "19:30",
+    "loc": "A12",
+    "proiectie": "2D"
+  }
 }
 ```
 
-Funcția utilizează fetch pentru preluarea datelor și verifică răspunsul HTTP prin `res.ok`.
+Elementele interfeței au atribute `data-testid`, conform ghidului profesorului:
 
-Adresa API-ului poate fi configurată prin variabila de mediu `VITE_API_URL`.
+| Atribut | Element |
+| --- | --- |
+| form | Formularul de adăugare |
+| form-title | Titlul filmului |
+| form-tip | Tipul biletului |
+| form-sala | Numărul sălii |
+| form-ora | Ora proiecției |
+| form-loc | Locul |
+| form-proiectie | Tipul proiecției |
+| form-submit | Butonul de adăugare |
+| form-error | Mesajul de eroare al formularului |
+| item | Cardul biletului |
+| item-title | Titlul biletului |
+| item-toggle | Checkbox-ul |
+| item-delete | Butonul de ștergere |
+| empty | Mesajul pentru lista goală |
+| loading | Mesajul de încărcare |
+| error | Mesajul de eroare API |
 
-Aceasta este documentată în `.env.example`.
+Cardurile au și atributul `data-id`, care conține identificatorul biletului.
 
-### 6.3. Utilizarea useEffect
+### 7.8. Testare efectuată
 
-În `App.jsx`, datele nu mai sunt definite direct în componentă.
+Au fost efectuate următoarele verificări:
 
-Lista este inițializată folosind:
+- Pornirea serverului cu `npm run api`.
+- Verificarea datelor JSON la `/bilete`.
+- Pornirea aplicației React cu `npm run dev`.
+- Afișarea formularului și a listei.
+- Validarea formatului locului.
+- Adăugarea unui bilet nou.
+- Păstrarea biletului după refresh.
+- Verificarea manuală a funcționalităților de modificare și ștergere.
+- Verificarea atributelor `data-testid` în consola browserului.
+- Compilarea aplicației cu `npm run build`.
 
-```javascript
-const [bilete, setBilete] = useState([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
+Rezultatul build-ului:
+
+```text
+vite v8.3.4 building client environment for production...
+20 modules transformed.
+built in 258ms
 ```
 
-La montarea componentei, `useEffect` apelează funcția `fetchBilete()` și actualizează lista după primirea răspunsului.
+Testele separate cu API-ul oprit și cu întârziere artificială nu au fost încă efectuate.
 
-Sunt utilizate:
-- `try` pentru încărcarea datelor;
-- `catch` pentru gestionarea erorilor;
-- `finally` pentru încheierea încărcării;
-- `ignore` pentru curățarea efectului.
-
-### 6.4. Gestionarea stărilor
-
-**Loading**
-
-Cât timp aplicația așteaptă răspunsul API-ului, este prevăzut mesajul:
-
-`Se încarcă biletele...`
-
-**Success**
-
-După primirea datelor, aplicația afișează biletele folosind componentele TicketList și TicketCard.
-
-**Error**
-
-Dacă cererea eșuează, aplicația afișează un mesaj care indică problema și recomandă verificarea serverului API.
-
-Mesajele sunt stilizate în `src/App.css`.
-
-### 6.5. Funcționalități păstrate
-
-- Afișarea cardurilor pentru bilete.
-- Modificarea stării biletelor.
-- Ștergerea biletelor.
-- Contorul biletelor disponibile.
-- Temele luminoasă și întunecată.
-- Designul responsive.
-
-În Etapa 6, modificările prin bifare și ștergere sunt locale, în state-ul React.
-
-La reîncărcarea paginii, datele sunt preluate din nou de la API.
-
-Salvarea modificărilor pe server este prevăzută pentru Etapa 7.
-
-### 6.6. Verificări
-
-Au fost confirmate:
-
-- Pornirea serverului json-server.
-- Afișarea datelor JSON la ruta `/bilete`.
-- Încărcarea celor cinci bilete în aplicația React.
-- Afișarea a trei bilete disponibile.
-- Ștergerea unui bilet.
-- Actualizarea contorului după ștergere.
-- Reapariția biletului după reîncărcarea paginii.
-
-Stările loading și error sunt implementate în cod. Testele separate cu întârziere artificială și cu API-ul oprit nu au fost efectuate.
-
-### 6.7. Stage 6 Verification Checklist
-
-| ID | Requirement | Where | How to check |
-|---|---|---|---|
-| S6-R1 | API starts and returns JSON | `package.json`, `db.json` | Run `npm run api`, open `/bilete` |
-| S6-R2 | Data moved out of React | `src/App.jsx`, `db.json` | Inspect `useState([])` |
-| S6-R3 | Loading message implemented | `src/App.jsx` | Start API with `--delay 4000` |
-| S6-R4 | Error message implemented | `src/App.jsx` | Stop API and refresh |
-| S6-R5 | Centralized fetch and env URL | `src/api.js`, `.env.example` | Inspect API configuration |
-| S6-R6 | README and AI log updated | `README.md`, `../ai-log/etapa-06.md` | Read documentation |
-| S6-R7 | Stage 6 published on GitHub | Git commit history | Verify after push |
-
-După publicarea Etapei 6 pe GitHub, referințele din coloana Where vor fi completate cu permalink-uri către commit-ul publicat, conform ghidului.
-
-Documentație AI: `../ai-log/etapa-06.md`
-
----
-
-## Rularea aplicației
-
-Pentru funcționarea Etapei 6 este necesară pornirea a două servere.
+## Instalare și rulare locală
 
 ### 1. Instalarea dependențelor
 
-Din directorul principal al proiectului:
+Din folderul `frontend`:
 
 ```bash
-cd frontend
 npm install
 ```
 
-### 2. Pornirea API-ului
+Pentru o instalare curată folosind versiunile din `package-lock.json`:
 
-În primul terminal, din directorul `frontend`:
+```bash
+npm ci
+```
+
+### 2. Pornirea serverului API
+
+În primul terminal:
 
 ```bash
 npm run api
 ```
 
-Adresa API-ului:
+API-ul va fi disponibil la:
 
-http://localhost:3001/bilete
+`http://localhost:3001/bilete`
 
 ### 3. Pornirea aplicației React
 
-Deschide un al doilea terminal în directorul `frontend` și execută:
+În al doilea terminal:
 
 ```bash
 npm run dev
 ```
 
-Adresa aplicației:
+Aplicația va fi disponibilă, în mod normal, la:
 
-http://localhost:5173/
+`http://localhost:5173/`
 
-Ambele terminale trebuie să rămână pornite pentru încărcarea datelor de la API.
+Ambele servere trebuie să fie pornite.
 
-### 4. Generarea versiunii de producție
+### 4. Verificarea build-ului
 
 ```bash
 npm run build
 ```
 
-Comanda generează fișierele pentru producție în directorul `dist`.
+Comanda generează versiunea de producție în folderul `dist/`.
 
-### 5. Configurarea adresei API
+## Documentația AI
 
-Fișierul `.env.example` documentează variabila:
+Pentru fiecare etapă există documentație în folderul `ai-log` din rădăcina repository-ului.
 
-```env
-VITE_API_URL=http://localhost:3001
-```
+Pentru Etapa 7:
 
-Pentru o adresă personalizată, se poate crea un fișier `.env` în directorul `frontend`.
+`ai-log/etapa-07.md`
 
-Dacă variabila nu este definită, aplicația utilizează automat adresa implicită `http://localhost:3001`.
+## Status proiect
 
----
-
-## Utilizarea inteligenței artificiale
-
-ChatGPT a fost utilizat ca instrument de asistență pentru:
-
-- Crearea structurii HTML.
-- Stilizarea interfeței CSS.
-- Implementarea designului responsive.
-- Implementarea logicii JavaScript.
-- Înțelegerea și configurarea React și Vite.
-- Organizarea componentelor React.
-- Utilizarea props, map și key.
-- Implementarea useState și a evenimentelor.
-- Gestionarea biletelor și schimbarea temei.
-- Configurarea json-server.
-- Implementarea cererilor API.
-- Utilizarea fetch, async/await și useEffect.
-- Gestionarea stărilor loading și error.
-- Identificarea și rezolvarea erorilor de dezvoltare.
-- Redactarea documentației proiectului.
-
-Codul și explicațiile au fost adaptate la tema CinemaTicket.
-
-Jurnalele AI pentru fiecare etapă sunt păstrate în directorul `ai-log`.
-
----
-
-## Stadiul proiectului
-
-- [x] Etapa 1 – HTML și CSS.
-- [x] Etapa 2 – Logica JavaScript.
 - [x] Etapa 3 – React și Vite.
-- [x] Etapa 4 – Componente React.
+- [x] Etapa 4 – Componente și props.
 - [x] Etapa 5 – State și evenimente.
-- [x] Etapa 6 – Date de la un API REST.
-- [ ] Etapa 7 – Formular, validare și salvare pe server.
+- [x] Etapa 6 – Date încărcate din API.
+- [x] Etapa 7 – Formular controlat, validare și CRUD cu persistență.
+- [ ] Etapa 8 – Rutare și pagină de detaliu.
 
-## Concluzie
+## Repository GitHub
 
-CinemaTicket a evoluat de la o interfață statică HTML/CSS la o aplicație React interactivă, care preia date printr-un API REST local.
-
-În Etapa 6 au fost introduse noțiuni de comunicare HTTP, încărcare asincronă, useEffect și gestionarea erorilor.
-
-Proiectul este pregătit pentru continuarea dezvoltării în Etapa 7, unde vor fi introduse formularul de adăugare, validarea și persistarea modificărilor pe server.
+https://github.com/sebiandrei12/CinemaTicket

@@ -1,19 +1,34 @@
+
+/* =========================================
+   CinemaTicket - Etapa 7
+   Stiluri generale
+========================================= */
+
 * {
     box-sizing: border-box;
 }
 
 :root {
+    color-scheme: light;
+
     --bg: #f4f5f7;
     --card: #ffffff;
     --text: #1f2933;
     --muted: #6b7280;
+
     --accent: #2C182B;
     --accent-dark: #1F1020;
     --accent-soft: #EDE5EC;
+
     --border: #e5e7eb;
+
     --standard: #2563eb;
     --vip: #9333ea;
     --student: #059669;
+
+    --error-bg: #fdf2f8;
+    --error-border: #fbcfe8;
+    --error-text: #9d174d;
 }
 
 body {
@@ -23,6 +38,16 @@ body {
     color: var(--text);
     line-height: 1.5;
 }
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* =========================================
+   Antet
+========================================= */
 
 .app-header {
     position: relative;
@@ -45,17 +70,23 @@ body {
     font-weight: 600;
 }
 
+/* =========================================
+   Layout principal - Etapa 7
+========================================= */
+
 .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 24px auto;
     padding: 0 16px;
+
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: 24px;
     align-items: start;
 }
 
 .panel {
+    min-width: 0;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -67,15 +98,21 @@ body {
     margin-top: 0;
 }
 
-/* Stiluri pentru formulare */
+/* =========================================
+   Formular adăugare bilet - Etapa 7
+========================================= */
 
-.item-form {
+.item-form,
+.task-form,
+.bilet-form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.item-form label {
+.item-form label,
+.task-form label,
+.bilet-form label {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -83,51 +120,102 @@ body {
 }
 
 .item-form input,
-.item-form select {
+.item-form select,
+.task-form input,
+.task-form select,
+.bilet-form input,
+.bilet-form select {
+    width: 100%;
+    min-width: 0;
     padding: 10px 12px;
     border: 1px solid var(--border);
     border-radius: 8px;
-    font: inherit;
+
     background: var(--card);
     color: var(--text);
+
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.item-form button {
+.item-form input:focus,
+.item-form select:focus,
+.task-form input:focus,
+.task-form select:focus,
+.bilet-form input:focus,
+.bilet-form select:focus {
+    border-color: var(--accent);
+}
+
+.item-form button,
+.task-form button,
+.bilet-form button {
     padding: 11px 16px;
     border: none;
     border-radius: 8px;
+
     background: var(--accent);
     color: white;
+
     font-weight: 700;
     cursor: pointer;
+
+    transition: background 0.2s, opacity 0.2s;
 }
 
-.item-form button:hover {
+.item-form button:hover:not(:disabled),
+.task-form button:hover:not(:disabled),
+.bilet-form button:hover:not(:disabled) {
     background: var(--accent-dark);
 }
 
-/* Lista de bilete */
+/* Buton dezactivat în timpul salvării */
+
+.item-form button:disabled,
+.task-form button:disabled,
+.bilet-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Câmpuri invalide */
+
+.item-form input[aria-invalid="true"],
+.task-form input[aria-invalid="true"],
+.bilet-form input[aria-invalid="true"] {
+    border-color: var(--error-text);
+    box-shadow: 0 0 0 1px var(--error-border);
+}
+
+/* =========================================
+   Lista de bilete
+========================================= */
 
 .ticket-list {
     list-style: none;
     padding: 0;
     margin: 0;
+
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* Card individual */
+/* =========================================
+   Card individual
+========================================= */
 
 .ticket-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+
     padding: 16px;
     border: 1px solid var(--border);
     border-radius: 10px;
+
     background: var(--card);
+
     transition: border-color 0.2s, background 0.2s;
 }
 
@@ -145,12 +233,15 @@ body {
     color: var(--muted);
 }
 
-/* Tipurile de bilete */
+/* =========================================
+   Etichete pentru tipurile de bilete
+========================================= */
 
 .badge {
     display: inline-block;
     padding: 3px 9px;
     border-radius: 999px;
+
     color: white;
     font-size: 0.75rem;
     font-weight: 700;
@@ -168,7 +259,9 @@ body {
     background: var(--student);
 }
 
-/* Starea biletului */
+/* =========================================
+   Starea biletului
+========================================= */
 
 .status {
     font-size: 0.85rem;
@@ -186,27 +279,15 @@ body {
     text-decoration: line-through;
 }
 
-/* Lista goală */
-
-.empty {
-    color: var(--muted);
-    font-style: italic;
-}
-
-/* Subsol */
-
-.app-footer {
-    text-align: center;
-    color: var(--muted);
-    padding: 24px;
-}
-
-/* Checkbox și informațiile biletului */
+/* =========================================
+   Checkbox și informații bilet
+========================================= */
 
 .ticket-main {
     display: flex;
     align-items: flex-start;
     gap: 12px;
+
     cursor: pointer;
     flex: 1;
     min-width: 0;
@@ -216,12 +297,15 @@ body {
     width: 18px;
     height: 18px;
     margin-top: 4px;
+
     flex-shrink: 0;
     accent-color: var(--accent);
     cursor: pointer;
 }
 
-/* Acțiuni pentru bilete */
+/* =========================================
+   Acțiuni pentru bilete
+========================================= */
 
 .ticket-actions {
     display: flex;
@@ -234,30 +318,63 @@ body {
     border: 1px solid var(--accent);
     background: transparent;
     color: var(--accent);
+
     border-radius: 8px;
     padding: 6px 12px;
-    font: inherit;
+
     cursor: pointer;
+
     transition: background 0.2s, color 0.2s;
 }
 
 .btn-danger:hover {
     background: var(--accent);
-    color: #fff;
+    color: white;
 }
 
-/* Butonul de schimbare a temei */
+/* =========================================
+   Mesaje de încărcare și eroare
+========================================= */
+
+.info {
+    color: var(--muted);
+}
+
+.error {
+    color: var(--error-text);
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 8px 0;
+}
+
+/* =========================================
+   Lista goală
+========================================= */
+
+.empty {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* =========================================
+   Buton schimbare temă
+========================================= */
 
 .theme-toggle {
     position: absolute;
     top: 12px;
     right: 16px;
+
     padding: 6px 12px;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 8px;
+
     background: transparent;
-    color: #fff;
-    font: inherit;
+    color: white;
+
     font-size: 0.9rem;
     cursor: pointer;
 }
@@ -266,54 +383,126 @@ body {
     background: rgba(255, 255, 255, 0.15);
 }
 
-/* Focus vizibil pentru tastatură */
+/* =========================================
+   Focus vizibil
+========================================= */
 
 :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
 
-/* Tema luminoasă */
+.app-header :focus-visible {
+    outline-color: white;
+}
+
+/* =========================================
+   Subsol
+========================================= */
+
+.app-footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 24px;
+}
+
+/* =========================================
+   Tema luminoasă
+========================================= */
 
 :root[data-theme="light"] {
     color-scheme: light;
+
     --bg: #f4f5f7;
     --card: #ffffff;
     --text: #1f2933;
     --muted: #6b7280;
+
     --border: #e5e7eb;
     --accent-soft: #EDE5EC;
+
+    --error-bg: #fdf2f8;
+    --error-border: #fbcfe8;
+    --error-text: #9d174d;
 }
 
-/* Tema întunecată */
+/* =========================================
+   Tema întunecată
+========================================= */
 
 :root[data-theme="dark"] {
     color-scheme: dark;
+
     --bg: #14121d;
     --card: #1e1b2e;
     --text: #e5e7eb;
     --muted: #9ca3af;
+
     --border: #352f4d;
     --accent-soft: #2a2342;
+
+    --accent: #c6a4c3;
+    --accent-dark: #b38aad;
+
+    --error-bg: #3b1d2e;
+    --error-border: #6b2a4a;
+    --error-text: #fda4af;
 }
 
-/* Tema sistemului, dacă nu a fost aleasă tema luminoasă */
+/* Butoanele formularului folosesc culoarea închisă
+   pentru a păstra contrastul în ambele teme */
+
+:root[data-theme="dark"] .task-form button,
+:root[data-theme="dark"] .bilet-form button,
+:root[data-theme="dark"] .item-form button {
+    background: #51304f;
+    color: #ffffff;
+}
+
+:root[data-theme="dark"] .task-form button:hover:not(:disabled),
+:root[data-theme="dark"] .bilet-form button:hover:not(:disabled),
+:root[data-theme="dark"] .item-form button:hover:not(:disabled) {
+    background: #684063;
+}
+
+/* =========================================
+   Tema automată a sistemului
+========================================= */
 
 @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
+    :root:not([data-theme="light"]):not([data-theme="dark"]) {
         color-scheme: dark;
+
         --bg: #14121d;
         --card: #1e1b2e;
         --text: #e5e7eb;
         --muted: #9ca3af;
+
         --border: #352f4d;
         --accent-soft: #2a2342;
-        --accent: #2C182B;
-        --accent-dark: #1F1020;
+
+        --accent: #c6a4c3;
+        --accent-dark: #b38aad;
+
+        --error-bg: #3b1d2e;
+        --error-border: #6b2a4a;
+        --error-text: #fda4af;
+    }
+
+    :root:not([data-theme="light"]):not([data-theme="dark"])
+    .task-form button,
+    :root:not([data-theme="light"]):not([data-theme="dark"])
+    .bilet-form button,
+    :root:not([data-theme="light"]):not([data-theme="dark"])
+    .item-form button {
+        background: #51304f;
+        color: white;
     }
 }
 
-/* Adaptare pentru ecrane mici */
+/* =========================================
+   Responsive - Ecrane mici
+========================================= */
 
 @media (max-width: 700px) {
     .container {
@@ -339,32 +528,8 @@ body {
         position: static;
         margin-bottom: 12px;
     }
-}
 
-
-
-/* Etapa 6 - Mesaje de încărcare și eroare */
-
-:root {
-    --error-bg: #fdf2f8;
-    --error-border: #fbcfe8;
-    --error-text: #9d174d;
-}
-
-:root[data-theme="dark"] {
-    --error-bg: #3b1d2e;
-    --error-border: #6b2a4a;
-    --error-text: #fda4af;
-}
-
-.info {
-    color: var(--muted, #64748b);
-}
-
-.error {
-    color: var(--error-text);
-    background: var(--error-bg);
-    border: 1px solid var(--error-border);
-    border-radius: 8px;
-    padding: 10px 12px;
+    .panel {
+        padding: 16px;
+    }
 }

@@ -1,8 +1,13 @@
+
 import TicketCard from "./TicketCard.jsx";
 
 export default function TicketList({ bilete, onToggle, onDelete }) {
     if (bilete.length === 0) {
-        return <p className="empty">Nu există niciun bilet.</p>;
+        return (
+            <p className="empty" data-testid="empty">
+                Nu există niciun bilet.
+            </p>
+        );
     }
 
     return (

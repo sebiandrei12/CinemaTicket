@@ -3,7 +3,7 @@
 
 CinemaTicket is a web application for managing cinema tickets. It allows users to view movie tickets, check their availability, mark tickets as sold or available, and remove tickets from the interface.
 
-The project is developed in stages for the Web Technologies course, starting with a static HTML/CSS mockup, continuing with JavaScript data logic, and then migrating to React with Vite. In Stage 6, ticket data is loaded from a REST API provided by `json-server`.
+The project is developed in stages for the Web Technologies course, starting with a static HTML/CSS mockup, continuing with JavaScript data logic, and then migrating to React with Vite. Stage 6 introduced a REST API using `json-server`, and Stage 7 adds validated ticket creation and persistent CRUD operations.
 
 ## Data model
 
@@ -43,13 +43,14 @@ The Stage 6 API therefore provides **5 tickets, of which 3 are available**.
 
 - `mockup/` — HTML, CSS and JavaScript files preserved from Stages 1 and 2.
 - `frontend/` — React application created using Vite in Stage 3.
-- `frontend/src/components/` — Reusable `TicketList` and `TicketCard` React components.
-- `frontend/db.json` — Ticket data served by `json-server` in Stage 6.
+- `frontend/src/components/` — Reusable `BiletForm`, `TicketList` and `TicketCard` React components.
+- `frontend/db.json` — Ticket data served and persisted by `json-server`.
 - `frontend/src/api.js` — HTTP requests and API URL configuration.
 - `frontend/.env.example` — Example API environment variable.
 - `ai-log/` — Documentation of AI assistance for each stage.
 - `frontend/README.md` — Technical documentation for the current React frontend.
 - `README.md` — Overall project documentation and verification checklists.
+- `tw.json` — Root-level configuration for automated Stage 7 verification.
 
 ## Stage 1: Static mockup
 
@@ -429,6 +430,81 @@ The final README checklist is published in a separate commit named `Stage 6: che
 
 AI documentation: [`ai-log/etapa-06.md`](ai-log/etapa-06.md).
 
+## Stage 7: Form and validation
+
+Stage 7 extends CinemaTicket with a **controlled React form** and server-side persistence for all four CRUD operations. Users can create cinema tickets in the interface without editing `db.json`, update ticket availability, and permanently delete tickets. Every change is reflected in the list **only after the API confirms success**.
+
+### Controlled ticket form
+
+The new `frontend/src/components/BiletForm.jsx` manages each field with React `useState`, `value` and `onChange`. It includes the movie title (`titlu`), ticket type (`tip`), hall (`sala`), time (`ora`), seat (`loc`) and screening format (`proiectie`). A new ticket starts with `gata: false`.
+
+The form prevents native page reloads using `e.preventDefault()` and validates input before submitting:
+
+- Movie title is required, with a maximum of 100 characters.
+- Ticket type must be `standard`, `vip` or `student`.
+- Hall must be an integer from 1 to 20.
+- Screening time must be valid `HH:MM`.
+- Seat must match a letter followed by one to three digits, such as `A12` or `B07`.
+- Screening format must be `2D`, `3D` or `IMAX`.
+
+Errors are displayed inside the form with `data-testid="form-error"` instead of browser alerts. During submission, the button is disabled and shows `Se salvează...`. Fields are cleared **only after the server saves successfully**; unsuccessful submissions leave the values in place for retrying.
+
+### HTTP methods and persistence
+
+All HTTP requests are centralized in `frontend/src/api.js` through the reusable `request()` function. It handles the JSON headers, non-2xx errors and empty `204 No Content` responses.
+
+| Action | Function | Method | Endpoint |
+| --- | --- | --- | --- |
+| Fetch tickets | `fetchBilete()` | GET | `/bilete` |
+| Add a ticket | `createBilet(bilet)` | POST | `/bilete` |
+| Change availability | `updateBilet(id, changes)` | PATCH | `/bilete/:id` |
+| Delete a ticket | `deleteBilet(id)` | DELETE | `/bilete/:id` |
+
+`App.jsx` invokes these functions in `handleAdd`, `handleToggle` and `handleDelete`. New tickets are appended using the **server-returned object and ID**. PATCH replaces the matching ticket with the updated object returned by the server, and DELETE removes the ticket from React state after confirmation. Thus the state remains consistent with `frontend/db.json` and modifications survive a browser refresh.
+
+The previous light/dark theme toggle, ticket counter, responsive card layout and loading/error messages are preserved. The form and list are displayed in two columns on desktop and stack vertically on narrow screens.
+
+### Automated test selectors
+
+The root-level `tw.json` describes the project-specific data model for the professor's automated tests:
+
+```json
+{
+  "resource": "bilete",
+  "title": "titlu",
+  "done": "gata",
+  "sample": {
+    "tip": "standard",
+    "sala": "4",
+    "ora": "19:30",
+    "loc": "A12",
+    "proiectie": "2D"
+  }
+}
+```
+
+The UI exposes the exact selectors from the guide: `form`, `form-title`, `form-tip`, `form-sala`, `form-ora`, `form-loc`, `form-proiectie`, `form-submit`, `form-error`, `item`, `item-title`, `item-toggle`, `item-delete`, `empty`, `loading` and `error`. Ticket cards also include `data-id` with the ticket identifier.
+
+### Stage 7: Manual verification
+
+The following checks have been completed during development:
+
+- `npm run api` served JSON from `http://localhost:3001/bilete`.
+- `npm run dev` displayed the two-column interface and existing tickets.
+- Invalid seat input produced an inline validation error.
+- A ticket for *Titanic* was added successfully and remained after refresh.
+- The user manually confirmed the toggle and delete functionality.
+- The browser console returned 32 elements with `data-testid` at the time of inspection.
+- `npm run build` completed successfully with Vite 8.3.4, transforming 20 modules in 258 ms.
+
+Separate tests of an unavailable API and of delayed submissions (`--delay 3000`) have **not yet been performed**. These checks should be completed before claiming full S7-R5 test coverage.
+
+### Stage 7: Verification checklist
+
+The S7-R1 through S7-R8 verification table with permanent GitHub permalinks will be added **after publishing the Stage 7 implementation**, in the separate `Stage 7: checklist` commit, as required by the project guide.
+
+AI documentation: [`ai-log/etapa-07.md`](ai-log/etapa-07.md).
+
 ## Technologies used
 
 - HTML5 and CSS3.
@@ -447,7 +523,7 @@ Open `mockup/index.html` using Live Server or directly in the browser.
 
 Use the browser developer tools (F12) to inspect the JavaScript console tests.
 
-### Stages 3–6: React application
+### Stages 3–7: React application
 
 From the main project directory:
 
@@ -488,7 +564,7 @@ npm run build
 
 The production build was confirmed in earlier project stages.
 
-The Stage 6 build should be checked again before final submission.
+Stage 7 production build was verified successfully with Vite 8.3.4 (20 modules transformed; build completed in 258 ms).
 
 Generated folders such as `dist/` and `node_modules/` should not be committed.
 
@@ -502,8 +578,9 @@ Generated folders such as `dist/` and `node_modules/` should not be committed.
 | ChatGPT | React components, props, `map()`, `key`, conditional rendering and documentation in Stage 4 |
 | ChatGPT | `useState`, immutable updates, callbacks, delete and toggle actions, theme switching in Stage 5 |
 | ChatGPT | `json-server`, `db.json`, `fetch`, `useEffect`, loading/error handling and troubleshooting in Stage 6 |
+| ChatGPT | Controlled form, validation, CRUD API calls, persistence, `tw.json`, test selectors and documentation in Stage 7 |
 
-The detailed AI-assisted work is documented in the files `ai-log/etapa-01.md` through `ai-log/etapa-06.md`.
+The detailed AI-assisted work is documented in the files `ai-log/etapa-01.md` through `ai-log/etapa-07.md`.
 
 ## Project status
 
@@ -513,7 +590,8 @@ The detailed AI-assisted work is documented in the files `ai-log/etapa-01.md` th
 - [x] Stage 4: Components rendered from data.
 - [x] Stage 5: Local state and events.
 - [x] Stage 6: Data from a mock API (implemented and published on GitHub).
-- [ ] Stage 7: Form, validation and API persistence.
+- [x] Stage 7: Form, validation and API persistence (implemented locally; publication pending).
+- [ ] Stage 8: Routing and detail page.
 
 ## Repository
 
