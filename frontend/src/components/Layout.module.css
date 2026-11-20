@@ -1,0 +1,113 @@
+
+
+/* CinemaTicket - Etapa 8
+   Stiluri pentru Layout */
+
+.header {
+    position: relative;
+    background: #2C182B;
+    color: #ffffff;
+    text-align: center;
+    padding: 32px 16px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
+
+.header p {
+    margin: 6px 0;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.link {
+    display: inline-block;
+    padding: 9px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+.active {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: #ffffff;
+}
+
+.themeToggle {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+
+    background: transparent;
+    color: #ffffff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.themeToggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.themeToggle:focus-visible,
+.link:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+.main {
+    min-height: calc(100vh - 230px);
+}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 24px;
+}
+
+/* Adaptare pentru telefon */
+
+@media (max-width: 700px) {
+    .header {
+        padding: 24px 16px;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .themeToggle {
+        position: static;
+        margin-bottom: 12px;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+    }
+
+    .link {
+        padding: 8px 14px;
+    }
+}

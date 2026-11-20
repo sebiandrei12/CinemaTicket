@@ -1,6 +1,6 @@
 
-
 import { useState } from "react";
+import styles from "./BiletForm.module.css";
 
 const TIPURI = [
     { value: "standard", label: "Standard" },
@@ -22,12 +22,15 @@ export default function BiletForm({ onAdd }) {
     const [eroare, setEroare] = useState("");
     const [trimite, setTrimite] = useState(false);
 
+    // Validarea datelor înainte de trimitere
     function valideaza() {
-        if (titlu.trim() === "") {
+        const titluCurat = titlu.trim();
+
+        if (titluCurat === "") {
             return "Titlul filmului este obligatoriu.";
         }
 
-        if (titlu.trim().length > TITLU_MAX) {
+        if (titluCurat.length > TITLU_MAX) {
             return `Titlul poate avea maximum ${TITLU_MAX} de caractere.`;
         }
 
@@ -36,6 +39,7 @@ export default function BiletForm({ onAdd }) {
         }
 
         if (
+            sala.trim() === "" ||
             !Number.isInteger(Number(sala)) ||
             Number(sala) < 1 ||
             Number(sala) > 20
@@ -58,9 +62,11 @@ export default function BiletForm({ onAdd }) {
         return "";
     }
 
+    // Trimiterea formularului către componenta părinte
     async function handleSubmit(e) {
         e.preventDefault();
 
+        // Prevenim trimiterea dublă
         if (trimite) return;
 
         const mesaj = valideaza();
@@ -74,6 +80,7 @@ export default function BiletForm({ onAdd }) {
         setTrimite(true);
 
         try {
+            // Serverul salvează înainte ca formularul să fie golit
             await onAdd({
                 titlu: titlu.trim(),
                 tip,
@@ -84,6 +91,7 @@ export default function BiletForm({ onAdd }) {
                 gata: false
             });
 
+            // Resetăm câmpurile numai după salvarea reușită
             setTitlu("");
             setTip("standard");
             setSala("1");
@@ -92,6 +100,7 @@ export default function BiletForm({ onAdd }) {
             setProiectie("2D");
 
         } catch (err) {
+            // Datele rămân în formular dacă API-ul eșuează
             setEroare(err.message);
         } finally {
             setTrimite(false);
@@ -100,7 +109,7 @@ export default function BiletForm({ onAdd }) {
 
     return (
         <form
-            className="task-form bilet-form"
+            className={styles.form}
             onSubmit={handleSubmit}
             noValidate
             data-testid="form"
@@ -189,6 +198,7 @@ export default function BiletForm({ onAdd }) {
 
             <button
                 type="submit"
+                className={styles.submit}
                 disabled={trimite}
                 data-testid="form-submit"
             >

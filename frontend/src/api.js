@@ -23,6 +23,11 @@ export function fetchBilete() {
     return request("/bilete");
 }
 
+// GET - Preia un singur bilet după ID (Etapa 8)
+export function fetchBilet(id) {
+    return request(`/bilete/${encodeURIComponent(id)}`);
+}
+
 // POST - Adaugă un bilet nou
 export function createBilet(bilet) {
     return request("/bilete", {

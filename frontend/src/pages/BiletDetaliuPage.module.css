@@ -1,0 +1,85 @@
+
+
+/* CinemaTicket - Etapa 8
+   Stiluri pentru pagina de detalii a biletului */
+
+.container {
+    max-width: 850px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.card {
+    min-width: 0;
+}
+
+.backLink {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+.title {
+    margin: 0 0 16px;
+    font-size: 1.8rem;
+    overflow-wrap: anywhere;
+}
+
+.done {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.badgeWrapper {
+    margin-bottom: 20px;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: minmax(130px, 200px) minmax(0, 1fr);
+    gap: 12px 20px;
+    margin: 24px 0 0;
+}
+
+.details dt {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.details dd {
+    margin: 0;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+.message {
+    margin: 32px auto;
+    max-width: 850px;
+    padding: 0 20px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 20px auto;
+        padding: 0 12px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .details dd {
+        margin-bottom: 12px;
+    }
+}

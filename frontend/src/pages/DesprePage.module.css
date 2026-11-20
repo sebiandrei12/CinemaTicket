@@ -1,0 +1,52 @@
+
+
+/* CinemaTicket - Etapa 8
+   Stiluri pentru pagina Despre */
+
+.container {
+    max-width: 850px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.card {
+    min-width: 0;
+}
+
+.title {
+    margin: 0 0 18px;
+    font-size: 1.8rem;
+    color: var(--text);
+}
+
+.description {
+    margin: 0 0 16px;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.subtitle {
+    margin: 24px 0 12px;
+    font-size: 1.2rem;
+}
+
+.list {
+    padding-left: 24px;
+    line-height: 1.9;
+    color: var(--text);
+}
+
+.list li {
+    margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 20px auto;
+        padding: 0 12px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+}

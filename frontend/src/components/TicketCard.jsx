@@ -1,20 +1,28 @@
 
+import { Link } from "react-router-dom";
+import styles from "./TicketCard.module.css";
+
 const ETICHETE_TIP = {
     standard: "Standard",
     vip: "VIP",
     student: "Student"
 };
 
-export default function TicketCard({ bilet, onToggle, onDelete }) {
+export default function TicketCard({
+    bilet,
+    onToggle,
+    onDelete
+}) {
     return (
         <li
-            className={bilet.gata ? "ticket-card done" : "ticket-card"}
+            className={`${styles.card} ${bilet.gata ? styles.done : ""}`}
             data-testid="item"
             data-id={bilet.id}
         >
-            <label className="ticket-main">
+            <div className={styles.main}>
                 <input
                     type="checkbox"
+                    className={styles.checkbox}
                     checked={bilet.gata}
                     onChange={() => onToggle(bilet.id)}
                     aria-label={`Marchează biletul pentru ${bilet.titlu} ca ${
@@ -23,13 +31,18 @@ export default function TicketCard({ bilet, onToggle, onDelete }) {
                     data-testid="item-toggle"
                 />
 
-                <div>
-                    <h3 data-testid="item-title">
-                        {bilet.titlu}
+                <div className={styles.content}>
+                    <h3 className={styles.title}>
+                        <Link
+                            to={`/bilete/${bilet.id}`}
+                            data-testid="item-link"
+                        >
+                            {bilet.titlu}
+                        </Link>
                     </h3>
 
                     <span className={`badge badge-${bilet.tip}`}>
-                        {ETICHETE_TIP[bilet.tip]}
+                        {ETICHETE_TIP[bilet.tip] ?? bilet.tip}
                     </span>
 
                     <p>Sala {bilet.sala}</p>
@@ -37,10 +50,10 @@ export default function TicketCard({ bilet, onToggle, onDelete }) {
                     <p>Loc: {bilet.loc}</p>
                     <p>Proiecție: {bilet.proiectie}</p>
                 </div>
-            </label>
+            </div>
 
-            <div className="ticket-actions">
-                <span className="status">
+            <div className={styles.actions}>
+                <span className={styles.status}>
                     {bilet.gata ? "Vândut" : "Disponibil"}
                 </span>
 

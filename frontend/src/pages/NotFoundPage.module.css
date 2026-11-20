@@ -1,0 +1,82 @@
+
+
+/* CinemaTicket - Etapa 8
+   Stiluri pentru pagina 404 */
+
+.container {
+    max-width: 700px;
+    margin: 48px auto;
+    padding: 0 20px;
+}
+
+.card {
+    text-align: center;
+    padding: 40px 24px;
+}
+
+.code {
+    margin: 0;
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--accent);
+}
+
+.title {
+    margin: 16px 0;
+    font-size: 1.6rem;
+    color: var(--text);
+}
+
+.description {
+    margin-bottom: 28px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.backLink {
+    display: inline-block;
+    padding: 11px 20px;
+    border-radius: 8px;
+
+    background: #2C182B;
+    color: #ffffff;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: background 0.2s;
+}
+
+.backLink:hover {
+    background: #1F1020;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+:global(:root[data-theme="dark"]) .backLink {
+    background: #51304f;
+}
+
+:global(:root[data-theme="dark"]) .backLink:hover {
+    background: #684063;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin: 24px auto;
+        padding: 0 12px;
+    }
+
+    .card {
+        padding: 30px 16px;
+    }
+
+    .code {
+        font-size: 3.8rem;
+    }
+
+    .title {
+        font-size: 1.3rem;
+    }
+}

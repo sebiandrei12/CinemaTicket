@@ -7,6 +7,8 @@ CinemaTicket este o aplicație web pentru gestionarea biletelor de cinema, dezvo
 
 Aplicația permite vizualizarea, adăugarea, modificarea stării și ștergerea biletelor, folosind React, Vite și un API REST simulat cu json-server.
 
+În Etapa 8 au fost adăugate navigarea cu React Router, pagina de detalii pentru fiecare bilet, pagina Despre, pagina 404 și stilizarea cu CSS Modules.
+
 Proiectul este dezvoltat progresiv, în etape, fiecare etapă adăugând funcționalități noi.
 
 ## Tehnologii utilizate
@@ -15,6 +17,8 @@ Proiectul este dezvoltat progresiv, în etape, fiecare etapă adăugând funcți
 - JavaScript (ES6+)
 - JSX
 - CSS3
+- CSS Modules
+- React Router
 - Vite
 - Node.js și npm
 - json-server 0.17.4
@@ -30,12 +34,27 @@ frontend/
 ├── src/
 │   ├── components/
 │   │   ├── BiletForm.jsx
+│   │   ├── BiletForm.module.css
+│   │   ├── Layout.jsx
+│   │   ├── Layout.module.css
 │   │   ├── TicketCard.jsx
-│   │   └── TicketList.jsx
+│   │   ├── TicketCard.module.css
+│   │   ├── TicketList.jsx
+│   │   └── TicketList.module.css
+│   ├── pages/
+│   │   ├── BiletePage.jsx
+│   │   ├── BiletePage.module.css
+│   │   ├── BiletDetaliuPage.jsx
+│   │   ├── BiletDetaliuPage.module.css
+│   │   ├── DesprePage.jsx
+│   │   ├── DesprePage.module.css
+│   │   ├── NotFoundPage.jsx
+│   │   └── NotFoundPage.module.css
 │   ├── api.js
 │   ├── App.jsx
 │   ├── App.css
 │   ├── cinema.js
+│   ├── index.css
 │   ├── index.html
 │   ├── main.jsx
 │   └── style.css
@@ -52,13 +71,15 @@ frontend/
 
 Fișierul `tw.json` se află în rădăcina repository-ului CinemaTicket, în afara folderului `frontend`.
 
+Fișierul `index.css` este utilizat pentru stilurile globale. Fișierele `.module.css` conțin stilurile componentelor și paginilor.
+
 ## Modelul de date
 
 Fiecare bilet este reprezentat printr-un obiect JavaScript cu următoarele proprietăți:
 
 | Proprietate | Tip | Descriere |
 | --- | --- | --- |
-| id | number | Identificator unic generat de server |
+| id | number sau string | Identificator unic generat de server |
 | titlu | string | Titlul filmului |
 | gata | boolean | false = disponibil, true = vândut |
 | tip | string | standard, vip sau student |
@@ -82,6 +103,8 @@ Funcționalități implementate:
 - Calcularea numărului de bilete disponibile.
 - Afișarea datelor în format JSON.
 - Reutilizarea stilurilor CSS.
+
+Afișarea temporară în format JSON a fost înlocuită în Etapa 4 cu componente React reutilizabile.
 
 ## Etapa 4 – Componente și afișarea listelor
 
@@ -111,6 +134,8 @@ Afișează informațiile unui bilet:
 
 Aspectul cardului se adaptează în funcție de starea disponibil/vândut.
 
+În Etapa 8, titlul filmului a devenit un link către pagina de detalii.
+
 ## Etapa 5 – State și evenimente
 
 În această etapă aplicația a devenit interactivă.
@@ -127,6 +152,8 @@ Au fost implementate:
 
 În Etapa 5, modificările erau păstrate numai în state-ul React și se pierdeau la reîncărcarea paginii.
 
+Persistența datelor a fost implementată în Etapa 7.
+
 ## Etapa 6 – Date de la un API
 
 În Etapa 6, datele au fost mutate din codul React în `db.json`.
@@ -139,7 +166,9 @@ Endpoint-ul principal este:
 
 Fișierul `src/api.js` conține funcția `fetchBilete()`, folosită pentru citirea datelor.
 
-În `App.jsx`, încărcarea biletelor se realizează cu `useEffect`.
+Inițial, în `App.jsx`, încărcarea biletelor se realiza cu `useEffect`.
+
+În Etapa 8, această logică a fost mutată în `BiletePage.jsx`.
 
 Aplicația gestionează următoarele stări:
 
@@ -149,7 +178,7 @@ Aplicația gestionează următoarele stări:
 
 URL-ul API-ului poate fi configurat prin `VITE_API_URL`, documentat în `.env.example`.
 
-În această etapă, bifarea și ștergerea erau încă operații locale.
+În Etapa 6, bifarea și ștergerea erau încă operații locale.
 
 ## Etapa 7 – Formular, validare și CRUD
 
@@ -195,7 +224,7 @@ La trimiterea formularului, `e.preventDefault()` împiedică reîncărcarea auto
 
 Mesajele de eroare sunt afișate direct în formular, fără folosirea funcției `alert()`.
 
-Câmpul invalid este marcat cu `aria-invalid`, iar CSS-ul evidențiază eroarea.
+Câmpul titlului folosește `aria-invalid` pentru semnalarea erorilor.
 
 ### 7.3. Prevenirea trimiterilor duble
 
@@ -222,7 +251,7 @@ Toate cererile HTTP sunt realizate prin această funcție, care:
 - Aruncă o eroare pentru răspunsurile care nu sunt 2xx.
 - Tratează răspunsurile HTTP 204 fără conținut.
 
-Funcțiile disponibile sunt:
+Funcțiile implementate în Etapa 7 sunt:
 
 ```javascript
 fetchBilete()
@@ -231,7 +260,9 @@ updateBilet(id, changes)
 deleteBilet(id)
 ```
 
-Componentele React nu folosesc direct `fetch()`.
+În Etapa 8 a fost adăugată și funcția `fetchBilet(id)`.
+
+Componentele React folosesc funcțiile din `api.js`, fără să implementeze cereri HTTP direct în componente.
 
 ### 7.5. Persistența datelor
 
@@ -256,7 +287,7 @@ Aplicația folosește un layout cu două coloane:
 - Stânga: formularul pentru adăugarea biletelor.
 - Dreapta: lista biletelor existente.
 
-Pe ecranele cu lățime de maximum 700px, panourile sunt afișate unul sub altul.
+Pe ecranele înguste, panourile sunt afișate unul sub altul.
 
 Au fost păstrate:
 
@@ -302,12 +333,14 @@ Elementele interfeței au atribute `data-testid`, conform ghidului profesorului:
 | form-submit | Butonul de adăugare |
 | form-error | Mesajul de eroare al formularului |
 | item | Cardul biletului |
-| item-title | Titlul biletului |
+| item-title | Titlul biletului în Etapa 7 |
 | item-toggle | Checkbox-ul |
 | item-delete | Butonul de ștergere |
 | empty | Mesajul pentru lista goală |
 | loading | Mesajul de încărcare |
 | error | Mesajul de eroare API |
+
+În Etapa 8, `item-title` a fost înlocuit cu `item-link`, conform cerințelor noi.
 
 Cardurile au și atributul `data-id`, care conține identificatorul biletului.
 
@@ -326,7 +359,7 @@ Au fost efectuate următoarele verificări:
 - Verificarea atributelor `data-testid` în consola browserului.
 - Compilarea aplicației cu `npm run build`.
 
-Rezultatul build-ului:
+Rezultatul build-ului Etapei 7:
 
 ```text
 vite v8.3.4 building client environment for production...
@@ -334,7 +367,298 @@ vite v8.3.4 building client environment for production...
 built in 258ms
 ```
 
-Testele separate cu API-ul oprit și cu întârziere artificială nu au fost încă efectuate.
+Testele separate cu API-ul oprit și cu întârziere artificială nu au fost efectuate în sesiunea Etapei 7.
+
+---
+
+## Etapa 8 – Navigare și stilizare pe componente
+
+### 8.1. Obiectiv
+
+Etapa 8 introduce navigarea între pagini folosind React Router și separarea stilurilor folosind CSS Modules.
+
+Funcționalitățile implementate în etapele anterioare sunt păstrate.
+
+### 8.2. Instalarea React Router
+
+Biblioteca a fost instalată folosind:
+
+```bash
+npm install react-router-dom
+```
+
+În `src/main.jsx`, componenta `App` este inclusă în `BrowserRouter`.
+
+```jsx
+<BrowserRouter>
+    <App />
+</BrowserRouter>
+```
+
+### 8.3. Configurarea rutelor
+
+Rutele sunt definite în `src/App.jsx`.
+
+| Rută | Componentă | Descriere |
+| --- | --- | --- |
+| `/` | BiletePage | Formular și lista biletelor |
+| `/bilete/:id` | BiletDetaliuPage | Detaliile unui bilet |
+| `/despre` | DesprePage | Prezentarea aplicației |
+| `*` | NotFoundPage | Pagina 404 |
+
+Navigarea folosește React Router și nu necesită reîncărcarea documentului HTML.
+
+### 8.4. Componenta Layout
+
+Fișier:
+
+`src/components/Layout.jsx`
+
+Componenta conține:
+
+- Antetul CinemaTicket.
+- Meniul principal de navigare.
+- Butonul pentru tema luminoasă/întunecată.
+- Componenta `Outlet`.
+- Subsolul aplicației.
+
+Meniul folosește `NavLink`, care evidențiază automat pagina activă.
+
+Ruta principală folosește proprietatea `end`.
+
+Meniul are atributul:
+
+`data-testid="nav"`
+
+### 8.5. Pagina principală
+
+Fișier:
+
+`src/pages/BiletePage.jsx`
+
+Logica de gestionare a biletelor a fost mutată din `App.jsx` în această pagină.
+
+Pagina implementează:
+
+- GET pentru încărcarea biletelor.
+- POST pentru adăugare.
+- PATCH pentru schimbarea stării.
+- DELETE pentru ștergere.
+- Contorul biletelor disponibile.
+- Mesaje loading și error.
+
+Datele sunt salvate în API înainte de actualizarea interfeței.
+
+### 8.6. Pagina de detalii
+
+Fișier:
+
+`src/pages/BiletDetaliuPage.jsx`
+
+Ruta dinamică:
+
+`/bilete/:id`
+
+Componenta folosește `useParams()` pentru citirea identificatorului din URL.
+
+În `src/api.js` a fost introdusă funcția:
+
+```javascript
+fetchBilet(id)
+```
+
+Aceasta realizează o cerere GET către:
+
+`/bilete/:id`
+
+Pagina afișează:
+
+- Titlul filmului.
+- Tipul biletului.
+- Sala.
+- Ora proiecției.
+- Locul.
+- Tipul proiecției.
+- Starea disponibil/vândut.
+- ID-ul biletului.
+
+Pagina conține și un link „Înapoi la bilete”.
+
+Atribute de testare:
+
+- `data-testid="detail"`
+- `data-testid="detail-title"`
+- `data-testid="loading"`
+- `data-testid="error"`
+
+Dacă biletul nu există, este afișat un mesaj de eroare.
+
+### 8.7. Linkuri către detalii
+
+În `src/components/TicketCard.jsx`, titlul filmului folosește componenta `Link`.
+
+```jsx
+<Link
+    to={`/bilete/${bilet.id}`}
+    data-testid="item-link"
+>
+    {bilet.titlu}
+</Link>
+```
+
+Atributul `item-title` din Etapa 7 a fost înlocuit cu `item-link`.
+
+Checkbox-ul și butonul de ștergere rămân funcționale.
+
+### 8.8. Pagina Despre
+
+Fișier:
+
+`src/pages/DesprePage.jsx`
+
+Ruta:
+
+`/despre`
+
+Pagina prezintă:
+
+- Descrierea CinemaTicket.
+- Tehnologiile utilizate.
+- Funcționalitățile aplicației.
+
+### 8.9. Pagina 404
+
+Fișier:
+
+`src/pages/NotFoundPage.jsx`
+
+Ruta:
+
+`*`
+
+Pentru adrese inexistente, precum `/ceva`, aplicația afișează:
+
+- Numărul 404.
+- Mesajul „Pagina nu a fost găsită”.
+- Linkul „Înapoi la bilete”.
+
+Pagina conține:
+
+`data-testid="not-found"`
+
+### 8.10. CSS Modules
+
+Stilurile globale sunt definite în:
+
+`src/index.css`
+
+Stilurile specifice componentelor sunt definite în:
+
+```text
+src/components/
+├── Layout.module.css
+├── BiletForm.module.css
+├── TicketCard.module.css
+└── TicketList.module.css
+
+src/pages/
+├── BiletePage.module.css
+├── BiletDetaliuPage.module.css
+├── DesprePage.module.css
+└── NotFoundPage.module.css
+```
+
+Componentele importă stilurile folosind:
+
+```jsx
+import styles from "./Component.module.css";
+```
+
+Exemplu de utilizare:
+
+```jsx
+<div className={styles.container}>
+    ...
+</div>
+```
+
+Avantaje:
+
+- Izolarea claselor CSS.
+- Evitarea conflictelor de stiluri.
+- Organizarea codului pe componente.
+- Întreținerea mai ușoară a interfeței.
+
+Au fost păstrate tema luminoasă/întunecată și designul responsive.
+
+### 8.11. Verificări funcționale
+
+Au fost verificate următoarele:
+
+| Test | Rezultat |
+| --- | --- |
+| Afișarea paginii principale | OK |
+| Încărcarea biletelor din API | OK |
+| Pagina Despre | OK |
+| Pagina de detalii Avatar | OK |
+| Ruta inexistentă `/ceva` | OK |
+| Bilet inexistent `/bilete/999` | OK |
+| Navigarea fără reîncărcarea documentului | OK |
+| GET, POST, PATCH, DELETE | OK |
+| Tema întunecată și CSS Modules | OK |
+
+Verificări efectuate în consola browserului:
+
+```javascript
+document.querySelectorAll('[data-testid="nav"] a').length
+```
+
+Rezultat:
+
+```text
+2
+```
+
+Verificarea titlului:
+
+```javascript
+document.querySelector('[data-testid="detail-title"]').textContent
+```
+
+Rezultat:
+
+```text
+'Avatar'
+```
+
+### 8.12. Build și ESLint
+
+Au fost executate comenzile:
+
+```bash
+npm run build
+npm run lint
+```
+
+Rezultatul build-ului:
+
+```text
+vite v8.3.4 building client environment for production...
+41 modules transformed.
+built in 272ms
+```
+
+ESLint nu a raportat erori în rezultatul terminalului.
+
+### 8.13. Documentație AI
+
+Asistența AI utilizată pentru Etapa 8 este documentată în:
+
+`../ai-log/etapa-08.md`
+
+Documentația include implementarea rutelor, componentele noi, CSS Modules și testele efectuate.
+
+---
 
 ## Instalare și rulare locală
 
@@ -386,13 +710,25 @@ npm run build
 
 Comanda generează versiunea de producție în folderul `dist/`.
 
+### 5. Verificarea ESLint
+
+```bash
+npm run lint
+```
+
+Comanda verifică problemele de cod conform configurației ESLint.
+
 ## Documentația AI
 
 Pentru fiecare etapă există documentație în folderul `ai-log` din rădăcina repository-ului.
 
 Pentru Etapa 7:
 
-`ai-log/etapa-07.md`
+`../ai-log/etapa-07.md`
+
+Pentru Etapa 8:
+
+`../ai-log/etapa-08.md`
 
 ## Status proiect
 
@@ -401,7 +737,7 @@ Pentru Etapa 7:
 - [x] Etapa 5 – State și evenimente.
 - [x] Etapa 6 – Date încărcate din API.
 - [x] Etapa 7 – Formular controlat, validare și CRUD cu persistență.
-- [ ] Etapa 8 – Rutare și pagină de detaliu.
+- [x] Etapa 8 – Rutare, pagină de detaliu și CSS Modules.
 
 ## Repository GitHub
 
