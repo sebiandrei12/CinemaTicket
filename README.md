@@ -1134,3 +1134,34 @@ AI assistance is documented in the files `ai-log/etapa-01.md` through `ai-log/et
 ## Repository
 
 [CinemaTicket on GitHub](https://github.com/sebiandrei12/CinemaTicket)
+
+
+
+---
+
+## Stage 8: Verification Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+| --- | --- | --- | --- |
+| S8-R1 | React Router installed and BrowserRouter configured | [package.json](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/package.json), [main.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/main.jsx) | Check react-router-dom dependency and BrowserRouter |
+| S8-R2 | Routes for main page, ticket details, About and 404 | [App.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/App.jsx) | Inspect Routes and Route elements |
+| S8-R3 | Shared Layout with NavLink, Outlet and navigation test ID | [Layout.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/components/Layout.jsx) | Navigate between Bilete and Despre; check data-testid="nav" |
+| S8-R4 | Ticket title links to dynamic detail route | [TicketCard.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/components/TicketCard.jsx) | Click a movie title; check data-testid="item-link" |
+| S8-R5 | Ticket details loaded with useParams and GET by ID; missing ID handled | [BiletDetaliuPage.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/pages/BiletDetaliuPage.jsx), [api.js](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/api.js) | Open /bilete/1 and /bilete/999 |
+| S8-R6 | About page and custom 404 page implemented | [DesprePage.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/pages/DesprePage.jsx), [NotFoundPage.jsx](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/pages/NotFoundPage.jsx) | Open /despre and /ceva |
+| S8-R7 | CSS Modules used for components and pages; global styles separated | [index.css](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/index.css), [Layout.module.css](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/components/Layout.module.css), [TicketCard.module.css](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/components/TicketCard.module.css), [BiletePage.module.css](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/src/pages/BiletePage.module.css) | Inspect CSS Modules imports and generated class names |
+| S8-R8 | Documentation, AI log, tests and implementation published | [Root README](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/README.md), [Frontend README](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/frontend/README.md), [AI log](https://github.com/sebiandrei12/CinemaTicket/blob/80d13d7/ai-log/etapa-08.md), [Implementation commit](https://github.com/sebiandrei12/CinemaTicket/commit/80d13d7) | Review documentation and run npm run build and npm run lint |
+
+### Stage 8 publication
+
+Implementation commit:
+
+[Stage 8: routing and detail page – 80d13d7](https://github.com/sebiandrei12/CinemaTicket/commit/80d13d7)
+
+The verification checklist is maintained in a separate commit:
+
+`Stage 8: checklist`
+
+AI documentation:
+
+[ai-log/etapa-08.md](ai-log/etapa-08.md)
